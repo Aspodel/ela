@@ -1,7 +1,6 @@
 import React from 'react';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 
-import FeatureLayout from '@/components/common/layouts/feature-layout';
 import { Input } from '@/components/ui/input';
 import {
   SectionCards,
@@ -10,6 +9,7 @@ import {
   VocabularyList,
   type VocabularyListItemDto,
 } from '@/features/vocabulary';
+import { ContentLayout } from '@/components/common/layouts';
 
 export const Route = createFileRoute('/app/vocabulary')({
   component: RouteComponent,
@@ -27,11 +27,11 @@ function RouteComponent() {
     ) ?? [];
 
   return (
-    <FeatureLayout
+    <ContentLayout
       title='Vocabulary'
       description='Manage your vocabulary here.'
     >
-      <div className='@container/main flex flex-1 flex-col gap-2 pt-8'>
+      <div className='@container/main flex flex-1 flex-col gap-2'>
         <div className='flex flex-col gap-4'>
           <SectionCards />
           <div className='px-4 lg:px-6'>{/* <ChartAreaInteractive /> */}</div>
@@ -56,6 +56,6 @@ function RouteComponent() {
           <Outlet />
         </div>
       </div>
-    </FeatureLayout>
+    </ContentLayout>
   );
 }

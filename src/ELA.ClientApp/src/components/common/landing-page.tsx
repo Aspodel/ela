@@ -130,13 +130,12 @@ export const LandingPage: React.FC = () => {
               >
                 Feedback
               </a>
-              <a
-                href='#signup'
-                onClick={scrollToSection('signup')}
+              <Link
+                to='/app'
                 className='py-2 font-medium text-indigo-600'
               >
-                Sign Up
-              </a>
+                Sign In
+              </Link>
             </div>
           </div>
         )}
@@ -188,7 +187,7 @@ export const LandingPage: React.FC = () => {
 
             <div className='lg:col-span-6'>
               <div className='relative'>
-                <div className='w-full h-72 sm:h-96 rounded-2xl bg-linear-to-tr from-indigo-100 to-violet-100 border border-white shadow-lg flex items-center justify-center'>
+                <div className='w-full h-72 sm:h-96 rounded-2xl bg-linear-to-tr from-indigo-100 via-pink-100 to-violet-100 border border-white shadow-lg flex items-center justify-center'>
                   {/* Simple mockup placeholder */}
                   <div className='w-64 sm:w-72 md:w-80 bg-white rounded-xl shadow-md p-4'>
                     <div className='h-10 flex items-center justify-between'>
@@ -517,7 +516,16 @@ export const LandingPage: React.FC = () => {
           </div>
 
           <div className='mt-8 text-sm text-slate-500 text-center'>
-            © {new Date().getFullYear()} Aspodel. All rights reserved.
+            © {new Date().getFullYear()}{' '}
+            <a
+              href='https://github.com/Aspodel'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='font-bold hover:underline underline-offset-4'
+            >
+              Aspodel
+            </a>
+            . All rights reserved.
           </div>
         </div>
       </footer>

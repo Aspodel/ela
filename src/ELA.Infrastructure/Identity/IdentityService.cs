@@ -136,8 +136,9 @@ public class IdentityService : IIdentityService
         {
             Id = user.Id,
             UserName = user.UserName ?? "",
-            Email = user.Email ?? "",
-            FullName = $"{user.FirstName} {user.LastName}".Trim(),
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
             Roles = roles
         };
     }
@@ -148,8 +149,9 @@ public class IdentityService : IIdentityService
         {
             Id = user.Id,
             UserName = user.UserName ?? "",
-            Email = user.Email ?? "",
-            FullName = $"{user.FirstName} {user.LastName}".Trim(),
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName
         });
         return users;
     }
