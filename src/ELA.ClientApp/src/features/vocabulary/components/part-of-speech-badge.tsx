@@ -7,22 +7,22 @@ import { PARTS_OF_SPEECH, type PartOfSpeech } from '@/features/vocabulary';
 const badgeVariants = cva('border', {
   variants: {
     variant: {
-      noun: 'bg-blue-100 text-blue-600 border-blue-200 dark:bg-blue-600/30 dark:text-blue-200 dark:border-blue-900',
-      verb: 'bg-green-100 text-green-600 border-green-200 dark:bg-green-600/30 dark:text-green-200 dark:border-green-900',
+      noun: 'bg-blue-100 text-blue-600 border-blue-200 dark:bg-blue-600/30 dark:text-blue-200 dark:border-blue-700',
+      verb: 'bg-green-100 text-green-600 border-green-200 dark:bg-green-600/30 dark:text-green-200 dark:border-green-700',
       adjective:
-        'bg-purple-100 text-purple-600 border-purple-200 dark:bg-purple-600/30 dark:text-purple-200 dark:border-purple-900',
+        'bg-purple-100 text-purple-600 border-purple-200 dark:bg-purple-600/30 dark:text-purple-200 dark:border-purple-700',
       adverb:
-        'bg-pink-100 text-pink-600 border-pink-200 dark:bg-pink-600/30 dark:text-pink-200 dark:border-pink-900',
+        'bg-pink-100 text-pink-600 border-pink-200 dark:bg-pink-600/30 dark:text-pink-200 dark:border-pink-700',
       pronoun:
-        'bg-yellow-100 text-yellow-600 border-yellow-200 dark:bg-yellow-600/30 dark:text-yellow-200 dark:border-yellow-900',
+        'bg-yellow-100 text-yellow-600 border-yellow-200 dark:bg-yellow-600/30 dark:text-yellow-200 dark:border-yellow-700',
       preposition:
-        'bg-orange-100 text-orange-600 border-orange-200 dark:bg-orange-600/30 dark:text-orange-200 dark:border-orange-900',
+        'bg-orange-100 text-orange-600 border-orange-200 dark:bg-orange-600/30 dark:text-orange-200 dark:border-orange-700',
       conjunction:
-        'bg-teal-100 text-teal-600 border-teal-200 dark:bg-teal-600/30 dark:text-teal-200 dark:border-teal-900',
+        'bg-teal-100 text-teal-600 border-teal-200 dark:bg-teal-600/30 dark:text-teal-200 dark:border-teal-700',
       interjection:
-        'bg-cyan-100 text-cyan-600 border-cyan-200 dark:bg-cyan-600/30 dark:text-cyan-200 dark:border-cyan-900',
+        'bg-cyan-100 text-cyan-600 border-cyan-200 dark:bg-cyan-600/30 dark:text-cyan-200 dark:border-cyan-700',
       default:
-        'bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-600/30 dark:text-gray-200 dark:border-gray-900',
+        'bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-600/30 dark:text-gray-200 dark:border-gray-700',
     },
   },
   defaultVariants: {

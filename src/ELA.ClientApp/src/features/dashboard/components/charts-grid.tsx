@@ -1,7 +1,4 @@
-'use client';
-
 import { TrendingUp } from 'lucide-react';
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
 import {
   Card,
@@ -12,13 +9,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart';
-
-export const description = 'A simple area chart';
+  FlashcardRetentionChart,
+  LearningProgressChart,
+  SkillValuationChart,
+} from '@/features/dashboard';
 
 const chartData = [
   { day: 'Nov 10', words: 18 },
@@ -30,71 +24,82 @@ const chartData = [
   { day: 'Nov 16', words: 32 },
 ];
 
-const chartConfig = {
-  words: {
-    label: 'Words learned',
-    color: 'var(--chart-1)',
-  },
-} satisfies ChartConfig;
+const chartData2 = [
+  { skill: 'Grammar', score: 80 },
+  { skill: 'Listening', score: 45 },
+  { skill: 'Speaking', score: 50 },
+  { skill: 'Reading', score: 75 },
+  { skill: 'Writing', score: 60 },
+];
+
+const chartData3 = [
+  { month: 'January', percentage: 56 },
+  { month: 'February', percentage: 65 },
+  { month: 'March', percentage: 35 },
+  { month: 'April', percentage: 73 },
+  { month: 'May', percentage: 95 },
+  { month: 'June', percentage: 74 },
+];
 
 export function ChartsGrid() {
   return (
     <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
       <Card>
         <CardHeader>
-          <CardTitle>Learning Journey</CardTitle>
+          <CardTitle>Learning Progress</CardTitle>
           <CardDescription>
             Showing your progress over the last 7 days
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig}>
-            <AreaChart
-              accessibilityLayer
-              data={chartData}
-              margin={{
-                left: 12,
-                right: 12,
-              }}
-            >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey='day'
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-                tickFormatter={(value) => value.slice(4, 7)}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator='line' />}
-              />
-              <defs>
-                <linearGradient id='gradWords' x1='0' y1='0' x2='0' y2='1'>
-                  <stop offset='0%' stopColor='oklch(0.5393 0.2713 286.7462)' />
-                  <stop offset='100%' stopColor='rgba(124,58,237,0.05)' />
-                </linearGradient>
-              </defs>
-              <Area
-                dataKey='words'
-                type='natural'
-                fill='url(#gradWords)'
-                fillOpacity={0.4}
-                stroke='var(--chart-2)'
-              />
-            </AreaChart>
-          </ChartContainer>
+          <LearningProgressChart data={chartData} />
         </CardContent>
-        <CardFooter>
-          <div className='flex w-full items-start gap-2 text-sm'>
-            <div className='grid gap-2'>
-              <div className='flex items-center gap-2 leading-none font-medium'>
-                Trending up by 5.2% this week <TrendingUp className='h-4 w-4' />
-              </div>
-              <div className='text-muted-foreground flex items-center gap-2 leading-none'>
-                124 words learned this week
-              </div>
-            </div>
+        <CardFooter className='flex-col gap-2 pt-4 text-sm'>
+          <div className='flex items-center gap-2 leading-none font-medium'>
+            Trending up by 5.2% this week <TrendingUp className='size-4' />
+          </div>
+          <div className='text-muted-foreground flex items-center gap-2 leading-none'>
+            From November 10 to November 16, 2025
+          </div>
+        </CardFooter>
+      </Card>
+
+      <Card>
+        <CardHeader className='items-center'>
+          <CardTitle>Skill Valuation</CardTitle>
+          <CardDescription>
+            Based on your recent quiz performances
+          </CardDescription>
+        </CardHeader>
+        <CardContent className='w-full lg:w-[80%] xl:w-2/3 mx-auto'>
+          <SkillValuationChart data={chartData2} />
+        </CardContent>
+        <CardFooter className='flex-col gap-2 text-sm'>
+          <div className='flex items-center gap-2 leading-none font-medium'>
+            Trending up by 15% this month <TrendingUp className='size-4' />
+          </div>
+          <div className='text-muted-foreground flex items-center gap-2 leading-none'>
+            January - June 2024
+          </div>
+        </CardFooter>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Flashcard Retention</CardTitle>
+          <CardDescription>
+            Percentage of flashcards retained over time
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <FlashcardRetentionChart data={chartData3} />
+        </CardContent>
+        <CardFooter className='flex-col gap-2 pt-4 text-sm'>
+          <div className='flex items-center gap-2 leading-none font-medium'>
+            Trending up by 2% this month <TrendingUp className='size-4' />
+          </div>
+          <div className='text-muted-foreground flex items-center gap-2 leading-none'>
+            January - June 2024
           </div>
         </CardFooter>
       </Card>

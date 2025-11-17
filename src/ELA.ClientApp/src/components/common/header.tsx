@@ -45,7 +45,7 @@ export function Header() {
   ];
 
   return (
-    <header className='sticky top-0 z-10 bg-background/70 backdrop-blur-sm border-b border-muted dark:bg-background/70'>
+    <header className='sticky top-0 z-10 bg-background/70 backdrop-blur-xs border-b border-muted dark:bg-background/70'>
       <div className='flex items-center justify-between py-3'>
         <Link to='/' className='font-bold text-xl'>
           ELA

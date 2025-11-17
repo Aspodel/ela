@@ -37,7 +37,7 @@ export function DeckCard({ deck, onEdit, onDelete }: DeckCardProps) {
               <Clock4Icon className='size-4' />
               {format(new Date(deck.created), 'PP')}
             </p>
-            <Badge className='text-md ml-auto bg-teal-100 text-teal-600 border-teal-200 dark:bg-teal-600/30 dark:text-teal-200 dark:border-teal-900'>
+            <Badge className='text-md ml-auto bg-teal-100 text-teal-600 border-teal-200 dark:bg-teal-600/30 dark:text-teal-200 dark:border-teal-700'>
               {deck.cardCount ?? 0} {deck.cardCount === 1 ? 'card' : 'cards'}
             </Badge>
           </div>
