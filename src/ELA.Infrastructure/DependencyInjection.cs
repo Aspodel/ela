@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Security.Claims;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -47,7 +48,7 @@ public static class DependencyInjection
                 ValidAudience = builder.Configuration["Jwt:Audience"],
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
-                )
+                ),
             };
         });
 
@@ -61,7 +62,8 @@ public static class DependencyInjection
 
         builder.Services.AddSingleton(TimeProvider.System);
         builder.Services.AddTransient<IIdentityService, IdentityService>();
-        builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
+        builder.Services.AddTransient<ICookieService, CookieService>();
+        builder.Services.AddTransient<ITokenService, TokenService>();
         builder.Services.AddTransient<ISpacedRepetitionScheduler, Sm2Scheduler>();
 
         builder.Services.AddAuthorization(options =>

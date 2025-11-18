@@ -8,6 +8,7 @@ public static class PartOfSpeechValidation
         "verb",
         "adjective",
         "adverb",
+        "phrasal verb",
         "pronoun",
         "preposition",
         "conjunction",

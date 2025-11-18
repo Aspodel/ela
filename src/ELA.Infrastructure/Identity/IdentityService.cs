@@ -8,18 +8,18 @@ public class IdentityService : IIdentityService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
     private readonly IAuthorizationService _authorizationService;
-    private readonly IJwtTokenService _jwtTokenService;
+    private readonly ITokenService _tokenService;
 
     public IdentityService(
         UserManager<ApplicationUser> userManager,
         IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
         IAuthorizationService authorizationService,
-        IJwtTokenService jwtTokenService)
+        ITokenService tokenService)
     {
         _userManager = userManager;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _authorizationService = authorizationService;
-        _jwtTokenService = jwtTokenService;
+        _tokenService = tokenService;
     }
 
     public async Task<string?> GetUserNameAsync(string userId)
@@ -27,22 +27,6 @@ public class IdentityService : IIdentityService
         var user = await _userManager.FindByIdAsync(userId);
 
         return user?.UserName;
-    }
-
-    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password, string? email = null, string? firstName = null, string? lastName = null, DateOnly? dateOfBirth = null)
-    {
-        var user = new ApplicationUser
-        {
-            UserName = userName,
-            Email = email,
-            FirstName = firstName,
-            LastName = lastName,
-            DateOfBirth = dateOfBirth
-        };
-
-        var result = await _userManager.CreateAsync(user, password);
-
-        return (result.ToApplicationResult(), user.Id);
     }
 
     public async Task<bool> IsInRoleAsync(string userId, string role)
@@ -68,6 +52,22 @@ public class IdentityService : IIdentityService
         return result.Succeeded;
     }
 
+    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password, string? email = null, string? firstName = null, string? lastName = null, DateOnly? dateOfBirth = null)
+    {
+        var user = new ApplicationUser
+        {
+            UserName = userName,
+            Email = email,
+            FirstName = firstName,
+            LastName = lastName,
+            DateOfBirth = dateOfBirth
+        };
+
+        var result = await _userManager.CreateAsync(user, password);
+
+        return (result.ToApplicationResult(), user.Id);
+    }
+
     public async Task<Result> DeleteUserAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -82,24 +82,24 @@ public class IdentityService : IIdentityService
         return result.ToApplicationResult();
     }
 
-    public async Task<(Result Result, string? Token)> LoginAsync(string userName, string password)
+    public async Task<UserDto?> ValidateUserAsync(string userName, string password)
     {
         var user = await _userManager.FindByNameAsync(userName);
-        if (user == null)
-        {
-            return (Result.Failure(["Invalid username or password."]), null);
-        }
 
-        var isValid = await _userManager.CheckPasswordAsync(user, password);
-        if (!isValid)
-        {
-            return (Result.Failure(["Invalid username or password."]), null);
-        }
+        if (user == null || !await _userManager.CheckPasswordAsync(user, password))
+            return null;
 
         var roles = await _userManager.GetRolesAsync(user);
 
-        var token = _jwtTokenService.GenerateToken(user.Id, user.UserName!, roles);
-        return (Result.Success(), token);
+        return new UserDto
+        {
+            Id = user.Id,
+            UserName = user.UserName!,
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Roles = roles
+        };
     }
 
     public async Task<Result> ChangePasswordAsync(string userId, string currentPassword, string newPassword)

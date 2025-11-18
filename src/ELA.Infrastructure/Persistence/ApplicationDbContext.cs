@@ -10,6 +10,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<Deck> Decks => Set<Deck>();
     public DbSet<Card> Cards => Set<Card>();
     public DbSet<ReviewLog> ReviewLogs => Set<ReviewLog>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

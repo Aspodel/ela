@@ -16,6 +16,7 @@ public class PartOfSpeech : ValueObject
     public static PartOfSpeech Verb => new("verb", "v");
     public static PartOfSpeech Adjective => new("adjective", "adj");
     public static PartOfSpeech Adverb => new("adverb", "adv");
+    public static PartOfSpeech PhrasalVerb => new("phrasal verb", "pv");
     public static PartOfSpeech Pronoun => new("pronoun", "pron");
     public static PartOfSpeech Preposition => new("preposition", "prep");
     public static PartOfSpeech Conjunction => new("conjunction", "conj");

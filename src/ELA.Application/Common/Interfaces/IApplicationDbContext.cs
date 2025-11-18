@@ -8,6 +8,7 @@ public interface IApplicationDbContext
     DbSet<Deck> Decks { get; }
     DbSet<Card> Cards { get; }
     DbSet<ReviewLog> ReviewLogs { get; }
+    DbSet<RefreshToken> RefreshTokens { get; }
 
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

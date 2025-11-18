@@ -12,8 +12,9 @@ public interface IIdentityService
 
     Task<Result> DeleteUserAsync(string userId);
 
-    Task<(Result Result, string? Token)> LoginAsync(string userName, string password);
 
+    Task<UserDto?> ValidateUserAsync(string userName, string password);
+    
     Task<Result> ChangePasswordAsync(string userId, string currentPassword, string newPassword);
 
     Task<Result> UpdateProfileAsync(string userId, string? email, string? firstName, string? lastName, DateOnly? dateOfBirth);
