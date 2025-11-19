@@ -1,4 +1,3 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Form } from '@/components/ui/form';
@@ -13,24 +12,31 @@ import {
   CardFooter,
 } from '@/components/ui/card';
 import { FormFieldWrapper } from '@/components/form-field-wrapper';
+import { useSignUp } from '@/lib/auth';
+import { toast } from 'sonner';
+import { useNavigate } from '@tanstack/react-router';
 
-interface SignUpFormProps {
-  onSubmit: (credentials: SignUpCredentials) => void;
-  loading?: boolean;
-  // error?: string;
-}
+type SignUpFormProps = {};
 
-const SignUpForm: React.FC<SignUpFormProps> = ({
-  onSubmit,
-  loading = false,
-  // error,
-}) => {
+function SignUpForm({}: SignUpFormProps) {
+  const navigate = useNavigate();
+  const { mutate: signUp, isPending: loading } = useSignUp();
+
   const form = useForm<SignUpCredentials>({
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   });
+
+  const onSubmit = (data: AuthCredentials) => {
+    signUp(data, {
+      onSuccess: () => {
+        toast.success('Signed up successfully');
+        navigate({ to: '/app/dashboard' });
+      },
+    });
+  };
 
   return (
     <Form {...form}>
@@ -131,7 +137,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
 
             <div className='text-center text-sm'>
               Already have an account?{' '}
-              <a href='/signin' className='text-primary hover:underline underline-offset-4'>
+              <a
+                href='/signin'
+                className='text-primary hover:underline underline-offset-4'
+              >
                 Sign in
               </a>
             </div>
@@ -140,6 +149,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
       </form>
     </Form>
   );
-};
+}
 
 export default SignUpForm;

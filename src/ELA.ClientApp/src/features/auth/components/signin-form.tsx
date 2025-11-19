@@ -1,5 +1,9 @@
-import React from 'react';
+import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
+import { useNavigate, useSearch } from '@tanstack/react-router';
+
+import { useSignIn } from '@/lib/auth';
+import { paths } from '@/config/paths';
 
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -12,16 +16,13 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card';
-import { FieldWrapper } from '@/components/field-wrapper';
 import { FieldGroup } from '@/components/ui/field';
-import { useSignIn } from '@/api/auth';
-import { toast } from 'sonner';
-import { useNavigate, useSearch } from '@tanstack/react-router';
+import { FieldWrapper } from '@/components/field-wrapper';
 
-const SignInForm: React.FC = () => {
+function SignInForm() {
   const { mutate: signIn, isPending: loading } = useSignIn();
   const navigate = useNavigate();
-  const { redirectTo } = useSearch({ from: '/signin' });
+  const { redirectTo } = useSearch({ from: '/_auth' });
 
   const form = useForm<AuthCredentials>({
     defaultValues: {
@@ -34,7 +35,10 @@ const SignInForm: React.FC = () => {
     signIn(data, {
       onSuccess: () => {
         toast.success('Signed in successfully');
-        navigate({ to: redirectTo ?? '/app/dashboard' });
+        navigate({
+          to: redirectTo || paths.app.dashboard.getHref(),
+          replace: true,
+        });
       },
     });
   };
@@ -117,6 +121,6 @@ const SignInForm: React.FC = () => {
       </form>
     </Form>
   );
-};
+}
 
 export default SignInForm;

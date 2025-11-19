@@ -5,8 +5,6 @@ declare interface AuthCredentials {
 
 declare interface AuthResponse {
   accessToken: string;
-  refreshToken: string;
-  expiresIn: number;
 }
 
 declare interface SignUpCredentials {
@@ -18,5 +16,5 @@ declare interface SignUpCredentials {
 }
 
 declare interface SignUpResponse {
-  userId: string;
+  accessToken: string;
 }

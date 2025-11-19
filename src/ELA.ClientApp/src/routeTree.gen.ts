@@ -9,30 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './app/routes/__root'
-import { Route as SignupRouteImport } from './app/routes/signup'
-import { Route as SigninRouteImport } from './app/routes/signin'
 import { Route as AppRouteRouteImport } from './app/routes/app/route'
+import { Route as AuthRouteRouteImport } from './app/routes/_auth/route'
 import { Route as IndexRouteImport } from './app/routes/index'
 import { Route as AppIndexRouteImport } from './app/routes/app/index'
 import { Route as AppQuizRouteImport } from './app/routes/app/quiz'
 import { Route as AppDashboardRouteImport } from './app/routes/app/dashboard'
+import { Route as AuthSignupRouteImport } from './app/routes/_auth/signup'
+import { Route as AuthSigninRouteImport } from './app/routes/_auth/signin'
 import { Route as AppVocabularyRouteRouteImport } from './app/routes/app/vocabulary/route'
 import { Route as AppFlashcardIndexRouteImport } from './app/routes/app/flashcard/index'
 import { Route as AppFlashcardDeckIdRouteImport } from './app/routes/app/flashcard/$deckId'
 
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SigninRoute = SigninRouteImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/app',
   path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -55,6 +50,16 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthSigninRoute = AuthSigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
 const AppVocabularyRouteRoute = AppVocabularyRouteRouteImport.update({
   id: '/vocabulary',
   path: '/vocabulary',
@@ -74,9 +79,9 @@ const AppFlashcardDeckIdRoute = AppFlashcardDeckIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteRouteWithChildren
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
   '/app/vocabulary': typeof AppVocabularyRouteRoute
+  '/signin': typeof AuthSigninRoute
+  '/signup': typeof AuthSignupRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/quiz': typeof AppQuizRoute
   '/app/': typeof AppIndexRoute
@@ -85,9 +90,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
   '/app/vocabulary': typeof AppVocabularyRouteRoute
+  '/signin': typeof AuthSigninRoute
+  '/signup': typeof AuthSignupRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/quiz': typeof AppQuizRoute
   '/app': typeof AppIndexRoute
@@ -97,10 +102,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteRouteWithChildren
   '/app': typeof AppRouteRouteWithChildren
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
   '/app/vocabulary': typeof AppVocabularyRouteRoute
+  '/_auth/signin': typeof AuthSigninRoute
+  '/_auth/signup': typeof AuthSignupRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/quiz': typeof AppQuizRoute
   '/app/': typeof AppIndexRoute
@@ -112,9 +118,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/app/vocabulary'
     | '/signin'
     | '/signup'
-    | '/app/vocabulary'
     | '/app/dashboard'
     | '/app/quiz'
     | '/app/'
@@ -123,9 +129,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/app/vocabulary'
     | '/signin'
     | '/signup'
-    | '/app/vocabulary'
     | '/app/dashboard'
     | '/app/quiz'
     | '/app'
@@ -134,10 +140,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_auth'
     | '/app'
-    | '/signin'
-    | '/signup'
     | '/app/vocabulary'
+    | '/_auth/signin'
+    | '/_auth/signup'
     | '/app/dashboard'
     | '/app/quiz'
     | '/app/'
@@ -147,32 +154,24 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
   AppRouteRoute: typeof AppRouteRouteWithChildren
-  SigninRoute: typeof SigninRoute
-  SignupRoute: typeof SignupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/app': {
       id: '/app'
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -203,6 +202,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_auth/signup': {
+      id: '/_auth/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/signin': {
+      id: '/_auth/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof AuthSigninRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
     '/app/vocabulary': {
       id: '/app/vocabulary'
       path: '/vocabulary'
@@ -226,6 +239,20 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthRouteRouteChildren {
+  AuthSigninRoute: typeof AuthSigninRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthSigninRoute: AuthSigninRoute,
+  AuthSignupRoute: AuthSignupRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
 
 interface AppRouteRouteChildren {
   AppVocabularyRouteRoute: typeof AppVocabularyRouteRoute
@@ -251,9 +278,8 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
   AppRouteRoute: AppRouteRouteWithChildren,
-  SigninRoute: SigninRoute,
-  SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

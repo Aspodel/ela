@@ -1,4 +1,4 @@
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import {
   SparklesIcon,
   BadgeCheckIcon,
@@ -11,8 +11,9 @@ import {
   BrainIcon,
 } from 'lucide-react';
 
-import { useSignOut } from '@/api/auth';
+import { useSignOut, useUser } from '@/lib/auth';
 
+import { ThemeToggle } from '@/components/theme-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -23,18 +24,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ThemeToggle } from '@/components/theme-toggle';
 
 export function Header() {
-  const logout = useSignOut;
-  const navigate = useNavigate();
+  const logout = useSignOut();
+  const { data: user } = useUser();
 
   const handleLogout = () => {
-    logout();
-    navigate({
-      to: '/signin',
-      search: { redirectTo: undefined },
-    });
+    logout.mutate();
   };
 
   const navItems = [
@@ -77,7 +73,9 @@ export function Header() {
             <DropdownMenuTrigger asChild>
               <Avatar className='size-10 cursor-pointer'>
                 <AvatarImage src={''} alt={''} />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>
+                  {user?.firstName?.[0] || user?.userName?.[0].toUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent
@@ -89,13 +87,17 @@ export function Header() {
                 <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                   <Avatar>
                     <AvatarImage src={''} alt={''} />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarFallback>
+                      {' '}
+                      {user?.firstName?.[0] ||
+                        user?.userName?.[0].toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                   <div className='grid flex-1 text-left text-sm leading-tight'>
-                    <span className='truncate font-medium'>{'Aspodel'}</span>
-                    <span className='truncate text-sm'>
-                      {'aspodel@example.com'}
+                    <span className='truncate font-medium'>
+                      {user?.userName}
                     </span>
+                    <span className='truncate text-sm'>{user?.email}</span>
                   </div>
                 </div>
               </DropdownMenuLabel>

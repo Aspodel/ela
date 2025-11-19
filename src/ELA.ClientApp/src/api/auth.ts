@@ -1,106 +1,100 @@
-import { z } from 'zod';
-import {
-  useMutation,
-  useQuery,
-  type QueryKey,
-  type UseMutationOptions,
-  type UseQueryOptions,
-} from '@tanstack/react-query';
-import { apiClient } from '@/lib/api-client';
+// import { z } from 'zod';
+// import {
+//   useQueryClient,
+//   type QueryKey,
+//   type UseMutationOptions,
+//   type UseQueryOptions,
+// } from '@tanstack/react-query';
+// import { apiClient } from '@/lib/api-client';
+// import { useAuthStore } from '@/stores/auth-store';
+// import { useApiQuery } from '@/hooks/useApiQuery';
+// import { useApiMutation } from '@/hooks/useApiMutation';
 
-const authKey = ['authenticated-user'];
+// const authKey = ['auth', 'user'] as QueryKey;
 
-// Validation schemas
-const authCredentialsSchema = z.object({
-  username: z.string().min(1, 'Required'),
-  password: z.string().min(6, 'Required'),
-});
-type AuthCredentials = z.infer<typeof authCredentialsSchema>;
+// // Validation schemas
+// const authCredentialsSchema = z.object({
+//   username: z.string().min(1, 'Required'),
+//   password: z.string().min(6, 'Required'),
+// });
+// type AuthCredentials = z.infer<typeof authCredentialsSchema>;
 
-const signUpCredentialsSchema = z.object({
-  username: z.string().min(1, 'Required'),
-  password: z.string().min(6, 'Required'),
-  email: z.string().min(1, 'Required').optional(),
-  firstName: z.string().min(1, 'Required').optional(),
-  lastName: z.string().min(1, 'Required').optional(),
-});
-type SignUpCredentials = z.infer<typeof signUpCredentialsSchema>;
+// const signUpCredentialsSchema = z.object({
+//   username: z.string().min(1, 'Required'),
+//   password: z.string().min(6, 'Required'),
+//   email: z.string().min(1, 'Required').optional(),
+//   firstName: z.string().min(1, 'Required').optional(),
+//   lastName: z.string().min(1, 'Required').optional(),
+// });
+// type SignUpCredentials = z.infer<typeof signUpCredentialsSchema>;
 
-// API call functions
-const getUser = async (): Promise<User> => {
-  const response = await apiClient.get('/users/me');
-  return response.data;
-};
+// const getUser = async (): Promise<User> => {
+//   const { data } = await apiClient.get('/users/me');
+//   return data;
+// };
 
-const requestWithCredentials = async <T>(url: string, data: T) => {
-  const response = await apiClient.post(url, data);
-  
-  // store token
-  const token = response.data.token;
-  if (token) localStorage.setItem('access_token', token);
+// const loginRequest = async (data: AuthCredentials): Promise<AuthResponse> => {
+//   const response = await apiClient.post('/auth/login', data);
+//   useAuthStore.getState().setAccessToken(response.data.accessToken);
+//   return response.data;
+// };
 
-  return response.data;
-};
+// const registerRequest = async (
+//   data: SignUpCredentials
+// ): Promise<SignUpResponse> => {
+//   const response = await apiClient.post('/auth/register', data);
+//   useAuthStore.getState().setAccessToken(response.data.accessToken);
+//   return response.data;
+// };
 
-// Hooks
-const useApiQuery = <T>(
-  queryKey: QueryKey,
-  queryFn: () => Promise<T>,
-  options?: Omit<UseQueryOptions<T, Error, T, QueryKey>, 'queryKey' | 'queryFn'>
-) => {
-  return useQuery<T>({
-    queryKey,
-    queryFn,
-    ...options,
-  });
-};
+// const logoutRequest = async (): Promise<void> => {
+//   await apiClient.post('/auth/logout');
+// };
 
-const useApiMutation = <T, U>(
-  mutationFn: (data: U) => Promise<T>,
-  options?: Omit<UseMutationOptions<T, Error, U>, 'mutationFn'>
-) => {
-  return useMutation<T, Error, U>({
-    mutationFn,
-    ...options,
-  });
-};
+// // Auth hooks
+// const useUser = (
+//   options?: Omit<
+//     UseQueryOptions<User, Error, User, QueryKey>,
+//     'queryKey' | 'queryFn'
+//   >
+// ) =>
+//   useApiQuery(authKey, getUser, {
+//     retry: false,
+//     ...options,
+//   });
+// useUser.getQueryKey = () => authKey;
 
-// API hooks
-const useUser = (
-  options?: Omit<
-    UseQueryOptions<User, Error, User, QueryKey>,
-    'queryKey' | 'queryFn'
-  >
-) => useApiQuery(authKey, getUser, options);
+// const useSignIn = (
+//   options?: Omit<
+//     UseMutationOptions<AuthResponse, Error, AuthCredentials>,
+//     'mutationFn'
+//   >
+// ) => useApiMutation<AuthResponse, AuthCredentials>(loginRequest, options);
 
-const useSignIn = (
-  options?: Omit<
-    UseMutationOptions<AuthResponse, Error, AuthCredentials>,
-    'mutationFn'
-  >
-) =>
-  useApiMutation<AuthResponse, AuthCredentials>(
-    (data) => requestWithCredentials('/auth/login', data),
-    options
-  );
+// const useSignUp = (
+//   options?: Omit<
+//     UseMutationOptions<SignUpResponse, Error, SignUpCredentials>,
+//     'mutationFn'
+//   >
+// ) =>
+//   useApiMutation<SignUpResponse, SignUpCredentials>(registerRequest, options);
 
-const useSignUp = (
-  options?: Omit<
-    UseMutationOptions<SignUpResponse, Error, SignUpCredentials>,
-    'mutationFn'
-  >
-) =>
-  useApiMutation<SignUpResponse, SignUpCredentials>(
-    (data) => requestWithCredentials('/auth/register', data),
-    options
-  );
+// const useSignOut = (
+//   options?: Omit<UseMutationOptions<void, Error, void>, 'mutationFn'>
+// ) => {
+//   const queryClient = useQueryClient();
 
-const useSignOut = (
-  // options?: Omit<UseMutationOptions<unknown, Error, void>, 'mutationFn'>
-) => localStorage.removeItem('access_token');
-  // useApiMutation<unknown, void>(async () => {
-  //   const response = await api.post('/auth/logout');
-  //   return response.data;
-  // }, options);
+//   return useApiMutation<void, void>(logoutRequest, {
+//     ...options,
+//     onSuccess: (data, variables, context, _mutation) => {
+//       queryClient.clear();
+//       useAuthStore.getState().setAccessToken(null);
 
-export { useUser, useSignIn, useSignUp, useSignOut };
+//       if (options?.onSuccess) {
+//         options.onSuccess(data, variables, context, _mutation);
+//       }
+//     },
+//   });
+// };
+
+// export { useUser, useSignIn, useSignUp, useSignOut };

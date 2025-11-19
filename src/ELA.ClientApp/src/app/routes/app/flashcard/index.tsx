@@ -9,7 +9,7 @@ export const Route = createFileRoute('/app/flashcard/')({
 
 function RouteComponent() {
   const deck = deckApi.useSearch({});
-  console.log(deck);
+
   return (
     <ContentLayout
       title='Decks'

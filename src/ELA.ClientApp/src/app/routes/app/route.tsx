@@ -1,8 +1,17 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 
+import { useAuthStore } from '@/stores/auth-store';
 import { AppLayout } from '@/components/common/layouts';
 
 export const Route = createFileRoute('/app')({
+  beforeLoad: async ({ location }) => {
+    if (!useAuthStore.getState().accessToken) {
+      throw redirect({
+        to: '/signin',
+        search: { redirectTo: location.href },
+      });
+    }
+  },
   component: () => (
     <AppLayout>
       <Outlet />

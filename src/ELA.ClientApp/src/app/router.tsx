@@ -6,20 +6,21 @@ import { routeTree } from '@/routeTree.gen';
 
 declare module '@tanstack/react-router' {
   interface Register {
-    router: ReturnType<typeof createAppRouter>
+    router: typeof createAppRouter;
   }
 }
 
-export const createAppRouter = (queryClient?: QueryClient) =>
+export const createAppRouter = (queryClient: QueryClient) =>
   createRouter({
     routeTree,
+    // defaultPreload: 'intent',
     context: { queryClient },
   });
 
 export const AppRouter = () => {
   const queryClient = useQueryClient();
 
-  const router = useMemo(() => createAppRouter(queryClient), [])
+  const router = useMemo(() => createAppRouter(queryClient), [queryClient]);
 
   return <RouterProvider router={router} />;
 };
