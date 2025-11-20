@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './app/routes/__root'
+import { Route as LandingRouteImport } from './app/routes/landing'
 import { Route as AppRouteRouteImport } from './app/routes/app/route'
 import { Route as AuthRouteRouteImport } from './app/routes/_auth/route'
 import { Route as IndexRouteImport } from './app/routes/index'
@@ -21,6 +22,11 @@ import { Route as AppVocabularyRouteRouteImport } from './app/routes/app/vocabul
 import { Route as AppFlashcardIndexRouteImport } from './app/routes/app/flashcard/index'
 import { Route as AppFlashcardDeckIdRouteImport } from './app/routes/app/flashcard/$deckId'
 
+const LandingRoute = LandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/app',
   path: '/app',
@@ -79,6 +85,7 @@ const AppFlashcardDeckIdRoute = AppFlashcardDeckIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteRouteWithChildren
+  '/landing': typeof LandingRoute
   '/app/vocabulary': typeof AppVocabularyRouteRoute
   '/signin': typeof AuthSigninRoute
   '/signup': typeof AuthSignupRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/landing': typeof LandingRoute
   '/app/vocabulary': typeof AppVocabularyRouteRoute
   '/signin': typeof AuthSigninRoute
   '/signup': typeof AuthSignupRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
   '/app': typeof AppRouteRouteWithChildren
+  '/landing': typeof LandingRoute
   '/app/vocabulary': typeof AppVocabularyRouteRoute
   '/_auth/signin': typeof AuthSigninRoute
   '/_auth/signup': typeof AuthSignupRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/landing'
     | '/app/vocabulary'
     | '/signin'
     | '/signup'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/landing'
     | '/app/vocabulary'
     | '/signin'
     | '/signup'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_auth'
     | '/app'
+    | '/landing'
     | '/app/vocabulary'
     | '/_auth/signin'
     | '/_auth/signup'
@@ -156,10 +168,18 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   AppRouteRoute: typeof AppRouteRouteWithChildren
+  LandingRoute: typeof LandingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/landing': {
+      id: '/landing'
+      path: '/landing'
+      fullPath: '/landing'
+      preLoaderRoute: typeof LandingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app': {
       id: '/app'
       path: '/app'
@@ -280,6 +300,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
   AppRouteRoute: AppRouteRouteWithChildren,
+  LandingRoute: LandingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -5,10 +5,10 @@ export const paths = {
   },
 
   auth: {
-    register: {
-      path: '/auth/register',
+    signup: {
+      path: '/signup',
       getHref: (redirectTo?: string | null | undefined) =>
-        `/auth/register${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+        `/signup${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
     },
     signin: {
       path: '/signin',

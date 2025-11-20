@@ -2,6 +2,7 @@ import axios, { type InternalAxiosRequestConfig } from 'axios';
 
 import { env } from '@/config/env';
 import { useAuthStore } from '@/stores/auth-store';
+import { paths } from '@/config/paths';
 
 export const apiClient = axios.create({
   baseURL: env.API_URL,
@@ -69,6 +70,10 @@ apiClient.interceptors.response.use(
           queue = [];
 
           useAuthStore.getState().clearAuth();
+          const searchParams = new URLSearchParams();
+          const redirectTo =
+            searchParams.get('redirectTo') || window.location.pathname;
+          window.location.href = paths.auth.signin.getHref(redirectTo);
           return Promise.reject(error);
         } finally {
           refreshing = false;

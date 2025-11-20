@@ -41,13 +41,13 @@ export function Header() {
   ];
 
   return (
-    <header className='sticky top-0 z-10 bg-background/70 backdrop-blur-xs border-b border-muted dark:bg-background/70'>
+    <header className='sticky top-0 z-10 bg-background/70 backdrop-blur-xs border-b border-muted'>
       <div className='flex items-center justify-between py-3'>
         <Link to='/' className='font-bold text-xl'>
           ELA
         </Link>
 
-        <nav className='hidden md:flex items-center text-muted-foreground gap-8'>
+        <nav className='hidden md:flex items-center text-muted-foreground font-medium gap-8'>
           {navItems.map((item) => (
             <Link
               key={item.to}

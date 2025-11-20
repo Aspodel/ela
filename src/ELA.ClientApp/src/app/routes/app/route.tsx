@@ -8,7 +8,7 @@ export const Route = createFileRoute('/app')({
     if (!useAuthStore.getState().accessToken) {
       throw redirect({
         to: '/signin',
-        search: { redirectTo: location.href },
+        search: { redirectTo: location.pathname },
       });
     }
   },
