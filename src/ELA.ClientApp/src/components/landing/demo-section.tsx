@@ -46,7 +46,7 @@ export function DemoSection() {
 
         <div className='mt-8 grid grid-cols-1 md:grid-cols-3 gap-6'>
           {DEMO_STEPS.map((step) => (
-            <Card>
+            <Card key={step.title}>
               <CardHeader>
                 <CardTitle>{step.title}</CardTitle>
                 <CardDescription>{step.description}</CardDescription>

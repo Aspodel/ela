@@ -67,7 +67,7 @@ export function Header() {
             </Button>
           ) : (
             <>
-              <Button variant='outline' className='text-primary' asChild>
+              <Button variant='outline' asChild>
                 <Link to='/app'>Sign In</Link>
               </Button>
               <Button onClick={() => scrollToSection('demo')}>Explore</Button>
