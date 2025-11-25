@@ -70,10 +70,11 @@ apiClient.interceptors.response.use(
           queue = [];
 
           useAuthStore.getState().clearAuth();
+
           const searchParams = new URLSearchParams();
-          const redirectTo =
-            searchParams.get('redirectTo') || window.location.pathname;
+          const redirectTo = searchParams.get('redirectTo') || window.location.pathname;
           window.location.href = paths.auth.signin.getHref(redirectTo);
+
           return Promise.reject(error);
         } finally {
           refreshing = false;

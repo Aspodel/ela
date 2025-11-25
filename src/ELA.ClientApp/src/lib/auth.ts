@@ -24,9 +24,12 @@ const useUser = (
     'queryKey' | 'queryFn'
   >
 ) => {
+  const token = useAuthStore((s) => s.accessToken);
+
   return useQuery({
     queryKey: authKey,
     queryFn: getUser,
+    enabled: !!token, 
     retry: false,
     ...options,
   });
@@ -49,10 +52,10 @@ const useSignIn = (
       var user = await getUser();
       queryClient.setQueryData(authKey, user);
 
-      const search = router.state.location.search as { redirectTo?: string };
+      const search = router.state.location.search
       const redirectTo = search?.redirectTo || '/app/dashboard';
 
-      await router.navigate({ to: redirectTo });
+      router.navigate({ to: redirectTo });
 
       options?.onSuccess?.(data, variables, context, _mutation);
     },
@@ -83,7 +86,7 @@ const useSignUp = (
       var user = await getUser();
       queryClient.setQueryData(authKey, user);
 
-      await router.navigate({ to: '/app/dashboard' });
+      router.navigate({ to: '/app/dashboard' } as any);
 
       options?.onSuccess?.(data, variables, context, _mutation);
     },
@@ -109,12 +112,12 @@ const useSignOut = (
       useAuthStore.getState().clearAuth();
       queryClient.clear();
 
-      await router.navigate({
+      router.navigate({
         to: '/signin',
         search: {
           redirectTo: window.location.pathname,
         },
-      });
+      } as any);
 
       options?.onSuccess?.(data, variables, context, _mutation);
     },
