@@ -30,7 +30,7 @@ export const DeckCardDropdown: React.FC<DeckCardDropdownProps> = ({
           variant='ghost'
           aria-label='Open menu'
           size='icon-sm'
-          className='absolute right-4 top-4 p-0 opacity-0 pointer-events-none transition-opacity duration-150 group-hover:opacity-100 group-hover:pointer-events-auto'
+          className='absolute -right-2 -top-2 p-0 opacity-0 pointer-events-none transition-opacity duration-150 group-hover:opacity-100 group-hover:pointer-events-auto'
         >
           <MoreVerticalIcon />
         </Button>

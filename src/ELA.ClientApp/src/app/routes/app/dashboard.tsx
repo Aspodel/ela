@@ -1,8 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 import {
   FlashcardPanel,
   QuickActions,
   QuizSummary,
+  SpeakingOrb,
   StatCards,
   SuggestedActions,
   VocabularySummary,
@@ -15,10 +17,22 @@ export const Route = createFileRoute('/app/dashboard')({
 });
 
 function RouteComponent() {
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
   return (
     <>
       <div className='space-y-8'>
         <WelcomeBanner name='Aspodel' />
+
+        {/* Speaking Orb Component */}
+        {/* <SpeakingOrb
+          isListening={isListening}
+          isSpeaking={isSpeaking}
+          onToggleListening={() => setIsListening(!isListening)}
+          onToggleSpeaking={() => setIsSpeaking(!isSpeaking)}
+        /> */}
+
         <ChartsGrid />
         <StatCards />
 

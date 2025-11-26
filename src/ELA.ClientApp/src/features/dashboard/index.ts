@@ -2,6 +2,7 @@ export * from './components/charts-grid';
 export * from './components/flashcard-panel';
 export * from './components/quick-actions';
 export * from './components/quiz-summary';
+export * from './components/speaking-orb';
 export * from './components/stat-cards';
 export * from './components/suggested-actions';
 export * from './components/vocabulary-summary';
