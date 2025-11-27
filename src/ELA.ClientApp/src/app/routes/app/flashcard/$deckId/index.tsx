@@ -4,7 +4,7 @@ import { cardApi } from '@/features/flashcard';
 import { FlashcardList } from '@/features/flashcard/components/flashcard-list';
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/app/flashcard/$deckId')({
+export const Route = createFileRoute('/app/flashcard/$deckId/')({
   component: RouteComponent,
 });
 

@@ -100,7 +100,7 @@ export function QuizHistoryList() {
                         </DialogTitle>
                     </DialogHeader>
                     <div className='flex-1 overflow-hidden'>
-                        <ScrollArea className='h-full pr-4'>
+                        <ScrollArea className='max-h-[70vh] pr-4'>
                             {selectedAttempt && (
                                 <QuizResults
                                     questions={getQuizQuestions(selectedAttempt.quizId)}

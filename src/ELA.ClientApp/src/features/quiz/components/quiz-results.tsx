@@ -64,7 +64,7 @@ export function QuizResults({ questions, userAnswers, onRetry }: QuizResultsProp
 
                     <div className='text-left space-y-6'>
                         <h3 className='text-xl font-semibold border-b pb-2'>Detailed Review</h3>
-                        <ScrollArea className='h-[500px] pr-0'>
+                        <ScrollArea type='always' className='h-[500px] pr-0'>
                             <div className='space-y-6 pr-4'>
                                 {questions.map((q, index) => {
                                     const userAnswer = userAnswers[index];

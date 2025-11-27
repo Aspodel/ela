@@ -21,7 +21,8 @@ import { Route as AppVocabularyRouteRouteImport } from './app/routes/app/vocabul
 import { Route as AppQuizIndexRouteImport } from './app/routes/app/quiz/index'
 import { Route as AppFlashcardIndexRouteImport } from './app/routes/app/flashcard/index'
 import { Route as AppQuizQuizIdRouteImport } from './app/routes/app/quiz/$quizId'
-import { Route as AppFlashcardDeckIdRouteImport } from './app/routes/app/flashcard/$deckId'
+import { Route as AppFlashcardDeckIdIndexRouteImport } from './app/routes/app/flashcard/$deckId/index'
+import { Route as AppFlashcardDeckIdStudyRouteImport } from './app/routes/app/flashcard/$deckId/study'
 
 const LandingRoute = LandingRouteImport.update({
   id: '/landing',
@@ -82,9 +83,14 @@ const AppQuizQuizIdRoute = AppQuizQuizIdRouteImport.update({
   path: '/quiz/$quizId',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppFlashcardDeckIdRoute = AppFlashcardDeckIdRouteImport.update({
-  id: '/flashcard/$deckId',
-  path: '/flashcard/$deckId',
+const AppFlashcardDeckIdIndexRoute = AppFlashcardDeckIdIndexRouteImport.update({
+  id: '/flashcard/$deckId/',
+  path: '/flashcard/$deckId/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppFlashcardDeckIdStudyRoute = AppFlashcardDeckIdStudyRouteImport.update({
+  id: '/flashcard/$deckId/study',
+  path: '/flashcard/$deckId/study',
   getParentRoute: () => AppRouteRoute,
 } as any)
 
@@ -97,10 +103,11 @@ export interface FileRoutesByFullPath {
   '/signup': typeof AuthSignupRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/': typeof AppIndexRoute
-  '/app/flashcard/$deckId': typeof AppFlashcardDeckIdRoute
   '/app/quiz/$quizId': typeof AppQuizQuizIdRoute
   '/app/flashcard': typeof AppFlashcardIndexRoute
   '/app/quiz': typeof AppQuizIndexRoute
+  '/app/flashcard/$deckId/study': typeof AppFlashcardDeckIdStudyRoute
+  '/app/flashcard/$deckId': typeof AppFlashcardDeckIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,10 +117,11 @@ export interface FileRoutesByTo {
   '/signup': typeof AuthSignupRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app': typeof AppIndexRoute
-  '/app/flashcard/$deckId': typeof AppFlashcardDeckIdRoute
   '/app/quiz/$quizId': typeof AppQuizQuizIdRoute
   '/app/flashcard': typeof AppFlashcardIndexRoute
   '/app/quiz': typeof AppQuizIndexRoute
+  '/app/flashcard/$deckId/study': typeof AppFlashcardDeckIdStudyRoute
+  '/app/flashcard/$deckId': typeof AppFlashcardDeckIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -126,10 +134,11 @@ export interface FileRoutesById {
   '/_auth/signup': typeof AuthSignupRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/': typeof AppIndexRoute
-  '/app/flashcard/$deckId': typeof AppFlashcardDeckIdRoute
   '/app/quiz/$quizId': typeof AppQuizQuizIdRoute
   '/app/flashcard/': typeof AppFlashcardIndexRoute
   '/app/quiz/': typeof AppQuizIndexRoute
+  '/app/flashcard/$deckId/study': typeof AppFlashcardDeckIdStudyRoute
+  '/app/flashcard/$deckId/': typeof AppFlashcardDeckIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -142,10 +151,11 @@ export interface FileRouteTypes {
     | '/signup'
     | '/app/dashboard'
     | '/app/'
-    | '/app/flashcard/$deckId'
     | '/app/quiz/$quizId'
     | '/app/flashcard'
     | '/app/quiz'
+    | '/app/flashcard/$deckId/study'
+    | '/app/flashcard/$deckId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,10 +165,11 @@ export interface FileRouteTypes {
     | '/signup'
     | '/app/dashboard'
     | '/app'
-    | '/app/flashcard/$deckId'
     | '/app/quiz/$quizId'
     | '/app/flashcard'
     | '/app/quiz'
+    | '/app/flashcard/$deckId/study'
+    | '/app/flashcard/$deckId'
   id:
     | '__root__'
     | '/'
@@ -170,10 +181,11 @@ export interface FileRouteTypes {
     | '/_auth/signup'
     | '/app/dashboard'
     | '/app/'
-    | '/app/flashcard/$deckId'
     | '/app/quiz/$quizId'
     | '/app/flashcard/'
     | '/app/quiz/'
+    | '/app/flashcard/$deckId/study'
+    | '/app/flashcard/$deckId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -269,11 +281,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppQuizQuizIdRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/app/flashcard/$deckId': {
-      id: '/app/flashcard/$deckId'
+    '/app/flashcard/$deckId/': {
+      id: '/app/flashcard/$deckId/'
       path: '/flashcard/$deckId'
       fullPath: '/app/flashcard/$deckId'
-      preLoaderRoute: typeof AppFlashcardDeckIdRouteImport
+      preLoaderRoute: typeof AppFlashcardDeckIdIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/flashcard/$deckId/study': {
+      id: '/app/flashcard/$deckId/study'
+      path: '/flashcard/$deckId/study'
+      fullPath: '/app/flashcard/$deckId/study'
+      preLoaderRoute: typeof AppFlashcardDeckIdStudyRouteImport
       parentRoute: typeof AppRouteRoute
     }
   }
@@ -297,20 +316,22 @@ interface AppRouteRouteChildren {
   AppVocabularyRouteRoute: typeof AppVocabularyRouteRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppIndexRoute: typeof AppIndexRoute
-  AppFlashcardDeckIdRoute: typeof AppFlashcardDeckIdRoute
   AppQuizQuizIdRoute: typeof AppQuizQuizIdRoute
   AppFlashcardIndexRoute: typeof AppFlashcardIndexRoute
   AppQuizIndexRoute: typeof AppQuizIndexRoute
+  AppFlashcardDeckIdStudyRoute: typeof AppFlashcardDeckIdStudyRoute
+  AppFlashcardDeckIdIndexRoute: typeof AppFlashcardDeckIdIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppVocabularyRouteRoute: AppVocabularyRouteRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppIndexRoute: AppIndexRoute,
-  AppFlashcardDeckIdRoute: AppFlashcardDeckIdRoute,
   AppQuizQuizIdRoute: AppQuizQuizIdRoute,
   AppFlashcardIndexRoute: AppFlashcardIndexRoute,
   AppQuizIndexRoute: AppQuizIndexRoute,
+  AppFlashcardDeckIdStudyRoute: AppFlashcardDeckIdStudyRoute,
+  AppFlashcardDeckIdIndexRoute: AppFlashcardDeckIdIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
