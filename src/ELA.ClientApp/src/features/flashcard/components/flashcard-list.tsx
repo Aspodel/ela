@@ -31,7 +31,7 @@ export const FlashcardList: React.FC<FlashcardListProps> = ({ cards }) => {
     <div className='flex flex-col gap-4'>
       <div className='flex flex-col sm:flex-row gap-4 justify-between items-center bg-card p-4 rounded-lg border shadow-sm'>
         <div className='relative w-full sm:w-72'>
-          <SearchIcon className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+          <SearchIcon className='absolute left-2 top-2.5 size-4 text-muted-foreground' />
           <Input
             placeholder='Search cards...'
             className='pl-8'

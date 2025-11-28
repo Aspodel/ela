@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { TrashIcon } from 'lucide-react';
+import { TrashIcon, PencilIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { useParams } from '@tanstack/react-router';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { cardApi } from '@/features/flashcard';
+import { cardApi, FlashcardEditDialog } from '@/features/flashcard';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,6 +34,7 @@ export const FlashcardCard: React.FC<FlashcardCardProps> = ({
   const { deckId } = useParams({ from: '/app/flashcard/$deckId/' });
   const [isFlipped, setIsFlipped] = useState(isRevealed);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const deleteMutation = cardApi.useDelete();
 
   useEffect(() => {
@@ -65,16 +66,27 @@ export const FlashcardCard: React.FC<FlashcardCardProps> = ({
       onClick={handleFlip}
       {...props}
     >
-      <div className='absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity'>
+      <div className='absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2'>
+        <Button
+          variant='secondary'
+          size='icon'
+          className='size-8'
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsEditing(true);
+          }}
+        >
+          <PencilIcon className='size-4' />
+        </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button
               variant='destructive'
               size='icon'
-              className='h-8 w-8'
+              className='size-8'
               onClick={(e) => e.stopPropagation()}
             >
-              <TrashIcon className='h-4 w-4' />
+              <TrashIcon className='size-4' />
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent onClick={(e) => e.stopPropagation()}>
@@ -91,6 +103,11 @@ export const FlashcardCard: React.FC<FlashcardCardProps> = ({
           </AlertDialogContent>
         </AlertDialog>
       </div>
+
+      <FlashcardEditDialog
+        card={isEditing ? card : null}
+        onClose={() => setIsEditing(false)}
+      />
 
       <motion.div
         initial={false}

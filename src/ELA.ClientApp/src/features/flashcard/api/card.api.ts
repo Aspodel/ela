@@ -17,7 +17,7 @@
 import { createCrudApi } from '@/lib/api-factory';
 
 export interface Card {
-  id: string;
+  id: number;
   front: string;
   back: string;
 }
