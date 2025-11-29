@@ -1,24 +1,23 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
+
 import {
+  ChartsGrid,
   FlashcardPanel,
   QuickActions,
   QuizSummary,
-  SpeakingOrb,
   StatCards,
   SuggestedActions,
   VocabularySummary,
   WelcomeBanner,
 } from '@/features/dashboard';
-import { ChartsGrid } from '@/features/dashboard';
 
 export const Route = createFileRoute('/app/dashboard')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [isListening, setIsListening] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
+  // const [isListening, setIsListening] = useState(false);
+  // const [isSpeaking, setIsSpeaking] = useState(false);
 
   return (
     <>

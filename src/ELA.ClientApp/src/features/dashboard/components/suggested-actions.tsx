@@ -12,7 +12,7 @@ import {
 export function SuggestedActions() {
   return (
     <Card className='gap-4'>
-      <CardHeader className='flex items-center justify-between mb-3'>
+      <CardHeader className='flex items-center justify-between'>
         <CardTitle>Personalized recommendations</CardTitle>
         <a className='text-sm text-muted-foreground hover:underline' href='#'>
           See all
@@ -20,17 +20,29 @@ export function SuggestedActions() {
       </CardHeader>
 
       <CardContent>
-        <ScrollArea className='w-full whitespace-nowrap'>
-          <div className='flex w-max space-x-4 pb-4'>
+        <ScrollArea type='always' className='w-full whitespace-nowrap'>
+          <div className='flex w-max space-x-4 pb-6 pt-2'>
             {data.map((r) => (
-              <Card key={r.id} className='min-w-[220px] gap-2 p-2'>
-                <CardHeader className='p-2'>
-                  <CardTitle className='truncate'>{r.title}</CardTitle>
-                  <CardDescription className=''>{r.reason}</CardDescription>
+              <Card
+                key={r.id}
+                className='w-[240px] gap-2 p-1 hover:shadow-md transition-all hover:-translate-y-0.5'
+              >
+                <CardHeader className='p-3 pb-0'>
+                  <CardTitle className='truncate text-base font-medium'>
+                    {r.title}
+                  </CardTitle>
+                  <CardDescription className='text-xs line-clamp-1'>
+                    {r.reason}
+                  </CardDescription>
                 </CardHeader>
-                <CardFooter className='flex items-center justify-between p-2'>
-                  <div className='text-sm text-slate-400'>{r.time}</div>
-                  <Button size='sm'>Start</Button>
+                <CardFooter className='flex items-center justify-between p-3 pt-4'>
+                  <div className='text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1'>
+                    <span className='inline-block w-1.5 h-1.5 rounded-full bg-indigo-500'></span>
+                    {r.time}
+                  </div>
+                  <Button size='sm' className='h-7 px-3 text-xs shadow-sm'>
+                    Start
+                  </Button>
                 </CardFooter>
               </Card>
             ))}

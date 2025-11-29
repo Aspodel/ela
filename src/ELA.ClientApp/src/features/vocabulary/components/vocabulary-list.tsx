@@ -1,4 +1,5 @@
 import React from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { toast } from 'sonner';
 
 import { ConfirmDialog } from '@/components/confirm-dialog';
@@ -66,16 +67,23 @@ export const VocabularyList: React.FC<VocabularyListProps> = ({ items }) => {
   }
 
   return (
-    <div className='grid grid-cols-1 gap-4 @md/main:grid-cols-2 @3xl/main:grid-cols-3 @5xl/main:grid-cols-4'>
-      {items.map((item) => (
-        <VocabularyCard
-          key={item.id}
-          vocabulary={item}
-          onSelect={() => setSelectedId(item.id)}
-          onEdit={setEditingId}
-          onDelete={setDeletingId}
-        />
-      ))}
+    <>
+      <motion.div
+        layout
+        className='grid grid-cols-1 gap-4 @md/main:grid-cols-2 @3xl/main:grid-cols-3 @5xl/main:grid-cols-4'
+      >
+        <AnimatePresence mode='popLayout'>
+          {items.map((item) => (
+            <VocabularyCard
+              key={item.id}
+              vocabulary={item}
+              onSelect={() => setSelectedId(item.id)}
+              onEdit={setEditingId}
+              onDelete={setDeletingId}
+            />
+          ))}
+        </AnimatePresence>
+      </motion.div>
 
       <VocabularyDetailsDialog
         id={selectedId!}
@@ -97,6 +105,6 @@ export const VocabularyList: React.FC<VocabularyListProps> = ({ items }) => {
         onConfirm={() => handleDelete(deletingId!)}
         loading={deleteVocab.isPending}
       />
-    </div>
+    </>
   );
 };
