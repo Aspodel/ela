@@ -112,7 +112,10 @@ export function createCrudApi<
   }) =>
     useQuery<R>({
       queryKey: key,
-      queryFn: () => apiClient.get(typeof url === 'function' ? url({}) : url),
+      queryFn: async () => {
+        const res = await apiClient.get(typeof url === 'function' ? url({}) : url);
+        return res.data;
+      },
       ...options,
     });
 

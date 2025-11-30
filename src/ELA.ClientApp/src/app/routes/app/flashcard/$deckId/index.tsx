@@ -1,12 +1,13 @@
-import { ArrowLeftIcon } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowLeftIcon, PlayIcon } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import { createFileRoute } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card as UiCard, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { FlashcardList } from '@/features/flashcard';
+import { FlashcardList, ReviewMode } from '@/features/flashcard';
 import { cardApi, deckApi } from '@/features/flashcard';
 
 export const Route = createFileRoute('/app/flashcard/$deckId/')({
@@ -21,6 +22,8 @@ function RouteComponent() {
   const { data, isLoading: isCardsLoading } = cardApi.useList<PaginatedList<Card>>({
     deckId: Number(deckId),
   });
+  const { data: dueCards } = cardApi.useDue({ deckId: Number(deckId) });
+  const [isReviewMode, setIsReviewMode] = useState(false);
 
   if (isDeckLoading) {
     return <div className='p-8'>Loading deck details...</div>;
@@ -28,6 +31,18 @@ function RouteComponent() {
 
   if (!deck) {
     return <div className='p-8'>Deck not found</div>;
+  }
+
+  console.log(dueCards);
+  if (isReviewMode && dueCards && dueCards.length > 0) {
+    return (
+      <ReviewMode
+        deckId={Number(deckId)}
+        cards={dueCards}
+        onComplete={() => setIsReviewMode(false)}
+        onCancel={() => setIsReviewMode(false)}
+      />
+    );
   }
 
   return (
@@ -39,16 +54,24 @@ function RouteComponent() {
             Back
           </Link>
         </Button>
-        <div>
-          <h1 className='text-3xl font-bold tracking-tight'>{deck.name}</h1>
-          <p className='text-muted-foreground'>{deck.description}</p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className='text-3xl font-bold tracking-tight'>{deck.name}</h1>
+            <p className='text-muted-foreground'>{deck.description}</p>
+          </div>
+          {dueCards && dueCards.length > 0 && (
+            <Button onClick={() => setIsReviewMode(true)}>
+              <PlayIcon className="mr-2 size-4" />
+              Review Now ({dueCards.length})
+            </Button>
+          )}
         </div>
       </div>
 
       {isCardsLoading ? (
         <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5'>
           {[...Array(8)].map((_, i) => (
-            <Card key={i}>
+            <UiCard key={i}>
               <CardHeader>
                 <CardTitle>
                   <Skeleton className='h-4 w-32' />
@@ -57,7 +80,7 @@ function RouteComponent() {
               <CardContent>
                 <Skeleton className='h-3 w-full' />
               </CardContent>
-            </Card>
+            </UiCard>
           ))}
         </div>
       ) : data?.items.length ? (

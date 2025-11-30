@@ -16,6 +16,7 @@ export * from './components/flashcard-create-dialog';
 export * from './components/flashcard-edit-dialog';
 export * from './components/flashcard-form';
 export * from './components/flashcard-list';
+export * from './components/review-mode';
 
 //HOOKS
 export * from './hooks/use-deck-form';
