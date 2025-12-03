@@ -40,6 +40,9 @@ function SignInForm() {
           replace: true,
         });
       },
+      onError: () => {
+        toast.error('Invalid credentials');
+      },
     });
   };
 

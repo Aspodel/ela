@@ -12,15 +12,20 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(authRequestInterceptor);
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
-  const token = useAuthStore.getState().accessToken;
-
   config.headers = config.headers ?? {};
 
-  if (token && config.headers.Authorization == null) {
+  const token = useAuthStore.getState().accessToken;
+
+  // Endpoints that should not receive auth headers
+  const skipPaths = ['/auth/login', '/auth/register', '/auth/refresh'];
+
+  const shouldSkip = skipPaths.some((p) => config.url?.includes(p));
+
+  if (!shouldSkip && token && !config.headers.Authorization) {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  config.headers.Accept = config.headers.Accept ?? 'application/json';
+  config.headers.Accept ??= 'application/json';
 
   return config;
 }
@@ -42,8 +47,8 @@ apiClient.interceptors.response.use(
 
     const original = error.config;
 
-    // Prevent infinite loop
-    if (original.url.includes('/auth/refresh')) {
+    // Prevent infinite loop & unnecessary refresh attempts
+    if (original.url.includes('/auth/refresh') || original.url.includes('/auth/login')) {
       return Promise.reject(error);
     }
 

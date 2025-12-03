@@ -50,7 +50,6 @@ function RouteComponent() {
       <div className='flex flex-col gap-2'>
         <Button variant='ghost' className='w-fit -ml-2' asChild>
           <Link to='/app/flashcard'>
-            <ArrowLeftIcon className='mr-2 size-4' />
             Back
           </Link>
         </Button>
@@ -61,8 +60,11 @@ function RouteComponent() {
           </div>
           {dueCards && dueCards.length > 0 && (
             <Button onClick={() => setIsReviewMode(true)}>
-              <PlayIcon className="mr-2 size-4" />
-              Review Now ({dueCards.length})
+              <PlayIcon className="size-4" />
+              Review Now
+              <span className='bg-white text-primary rounded-full size-5 font-medium flex items-center justify-center'>
+                {dueCards.length}
+              </span> 
             </Button>
           )}
         </div>
