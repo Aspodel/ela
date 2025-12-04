@@ -4,7 +4,7 @@ import { CheckIcon, XIcon, ClockIcon, ThumbsUpIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card as UICard, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { cardApi } from '../api/card.api';
+import { cardApi } from '../../api/card.api';
 
 interface ReviewModeProps {
     deckId: number;

@@ -4,19 +4,19 @@ export * from './api/deck.api';
 export * from './api/type';
 
 //COMPONENTS
-export * from './components/deck-card-dropdown';
-export * from './components/deck-card';
-export * from './components/deck-create-dialog';
-export * from './components/deck-edit-dialog';
-export * from './components/deck-form';
-export * from './components/deck-list';
+export * from './components/deck/deck-card-dropdown';
+export * from './components/deck/deck-card';
+export * from './components/deck/deck-create-dialog';
+export * from './components/deck/deck-edit-dialog';
+export * from './components/deck/deck-form';
+export * from './components/deck/deck-list';
 
-export * from './components/flashcard-card';
-export * from './components/flashcard-create-dialog';
-export * from './components/flashcard-edit-dialog';
-export * from './components/flashcard-form';
-export * from './components/flashcard-list';
-export * from './components/review-mode';
+export * from './components/flashcard/flashcard-card';
+export * from './components/flashcard/flashcard-create-dialog';
+export * from './components/flashcard/flashcard-edit-dialog';
+export * from './components/flashcard/flashcard-form';
+export * from './components/flashcard/flashcard-list';
+export * from './components/flashcard/review-mode';
 
 //HOOKS
 export * from './hooks/use-deck-form';

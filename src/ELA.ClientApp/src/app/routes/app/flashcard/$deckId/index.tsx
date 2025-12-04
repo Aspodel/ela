@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { ArrowLeftIcon, PlayIcon } from 'lucide-react';
+import React from 'react';
 import { Link } from '@tanstack/react-router';
+import { ArrowLeftIcon, PlayIcon } from 'lucide-react';
 import { createFileRoute } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card as UiCard, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { FlashcardList, ReviewMode } from '@/features/flashcard';
 import { cardApi, deckApi } from '@/features/flashcard';
+import { FlashcardList, ReviewMode } from '@/features/flashcard';
 
 export const Route = createFileRoute('/app/flashcard/$deckId/')({
   component: RouteComponent,
@@ -23,7 +23,7 @@ function RouteComponent() {
     deckId: Number(deckId),
   });
   const { data: dueCards } = cardApi.useDue({ deckId: Number(deckId) });
-  const [isReviewMode, setIsReviewMode] = useState(false);
+  const [isReviewMode, setIsReviewMode] = React.useState(false);
 
   if (isDeckLoading) {
     return <div className='p-8'>Loading deck details...</div>;
@@ -50,6 +50,7 @@ function RouteComponent() {
       <div className='flex flex-col gap-2'>
         <Button variant='ghost' className='w-fit -ml-2' asChild>
           <Link to='/app/flashcard'>
+            <ArrowLeftIcon className='w-4 h-4 mr-2' />
             Back
           </Link>
         </Button>
@@ -64,7 +65,7 @@ function RouteComponent() {
               Review Now
               <span className='bg-white text-primary rounded-full size-5 font-medium flex items-center justify-center'>
                 {dueCards.length}
-              </span> 
+              </span>
             </Button>
           )}
         </div>
