@@ -2,7 +2,7 @@ namespace ELA;
 
 public class ReviewLog : BaseEntity
 {
-    public int CardId { get; private set; }
+    public Guid CardId { get; private set; }
     public DateTimeOffset ReviewDate { get; private set; }
 
     // Review result
@@ -13,7 +13,7 @@ public class ReviewLog : BaseEntity
     public double EaseFactor { get; private set; }
     public int Repetition { get; private set; }
 
-    public ReviewLog(int cardId, DateTimeOffset reviewDate, int qualityRating,
+    public ReviewLog(Guid cardId, DateTimeOffset reviewDate, int qualityRating,
         int interval, double easeFactor, int repetition)
     {
         CardId = cardId;

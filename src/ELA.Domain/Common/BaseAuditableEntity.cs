@@ -11,6 +11,6 @@ public abstract class BaseAuditableEntity<T> : BaseEntity<T>
     public string? LastModifiedBy { get; set; }
 }
 
-public abstract class BaseAuditableEntity : BaseAuditableEntity<int>
+public abstract class BaseAuditableEntity : BaseAuditableEntity<Guid>
 {
 }

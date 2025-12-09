@@ -45,7 +45,7 @@ public class Vocabulary : BaseAuditableEntity
         }
     }
 
-    public void RemoveDefinition(int definitionId)
+    public void RemoveDefinition(Guid definitionId)
     {
         var index = _definitions.FindIndex(d => d.Id == definitionId);
         if (index < 0)
@@ -54,7 +54,7 @@ public class Vocabulary : BaseAuditableEntity
         _definitions.RemoveAt(index);
     }
 
-    public void UpdateDefinition(int definitionId, string newMeaning, string? newTranslation, PartOfSpeech? newPartOfSpeech)
+    public void UpdateDefinition(Guid definitionId, string newMeaning, string? newTranslation, PartOfSpeech? newPartOfSpeech)
     {
         var definition = _definitions.FirstOrDefault(d => d.Id == definitionId)
             ?? throw new ArgumentException($"Definition with Id {definitionId} not found.", nameof(definitionId));

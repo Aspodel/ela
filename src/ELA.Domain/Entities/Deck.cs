@@ -42,7 +42,7 @@ public class Deck : BaseAuditableEntity
         return newCards;
     }
 
-    public void RemoveCard(int cardId)
+    public void RemoveCard(Guid cardId)
     {
         var index = _cards.FindIndex(c => c.Id == cardId);
         if (index < 0)
@@ -51,7 +51,7 @@ public class Deck : BaseAuditableEntity
         _cards.RemoveAt(index);
     }
 
-    public void UpdateCard(int cardId, string newFront, string newBack)
+    public void UpdateCard(Guid cardId, string newFront, string newBack)
     {
         var card = _cards.FirstOrDefault(c => c.Id == cardId)
             ?? throw new ArgumentException($"Card with Id {cardId} not found.", nameof(cardId));

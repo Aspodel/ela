@@ -5,8 +5,8 @@ public class Card : BaseAuditableEntity
     public string Front { get; private set; }
     public string Back { get; private set; }
 
-    public int DeckId { get; private set; }
-    public Deck? Deck { get; private set; }
+    public Guid DeckId { get; private set; }
+    public Deck Deck { get; private set; } = null!;
 
     // SM-2
     public double EaseFactor { get; private set; } = 2.5;
@@ -19,7 +19,7 @@ public class Card : BaseAuditableEntity
     private readonly List<ReviewLog> _reviewLogs = [];
     public IReadOnlyCollection<ReviewLog> ReviewLogs => _reviewLogs.AsReadOnly();
 
-    public Card(string front, string back, int deckId)
+    public Card(string front, string back, Guid deckId)
     {
         Front = front;
         Back = back;

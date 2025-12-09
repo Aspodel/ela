@@ -60,7 +60,7 @@ public class DeckTests
     {
         var deck = new Deck("My Deck", "user1");
 
-        Action act = () => deck.RemoveCard(999);
+        Action act = () => deck.RemoveCard(Guid.NewGuid());
 
         act.Should().Throw<ArgumentException>()
             .WithMessage("Card not found.*");
@@ -83,7 +83,7 @@ public class DeckTests
     {
         var deck = new Deck("My Deck", "user1");
 
-        Action act = () => deck.UpdateCard(999, "Front", "Back");
+        Action act = () => deck.UpdateCard(Guid.NewGuid(), "Front", "Back");
 
         act.Should().Throw<ArgumentException>()
             .WithMessage("Card not found.*");

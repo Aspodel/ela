@@ -6,7 +6,7 @@ public class Definition : BaseEntity
     public string? Translation { get; private set; }
     public PartOfSpeech? PartOfSpeech { get; private set; }
 
-    public int VocabularyId { get; private set; }
+    public Guid VocabularyId { get; private set; }
     public Vocabulary? Vocabulary { get; private set; }
 
     private readonly List<Example> _examples = [];
@@ -17,7 +17,7 @@ public class Definition : BaseEntity
         Meaning = string.Empty;
     }
 
-    public Definition(string meaning, string? translation, PartOfSpeech? partOfSpeech, int vocabularyId)
+    public Definition(string meaning, string? translation, PartOfSpeech? partOfSpeech, Guid vocabularyId)
     {
         Meaning = meaning;
         Translation = translation;
@@ -47,7 +47,7 @@ public class Definition : BaseEntity
         }
     }
 
-    public void RemoveExample(int exampleId)
+    public void RemoveExample(Guid exampleId)
     {
         var index = _examples.FindIndex(e => e.Id == exampleId);
         if (index < 0)
@@ -56,7 +56,7 @@ public class Definition : BaseEntity
         _examples.RemoveAt(index);
     }
 
-    public void UpdateExample(int exampleId, string newText, string? newTranslation)
+    public void UpdateExample(Guid exampleId, string newText, string? newTranslation)
     {
         var example = _examples.FirstOrDefault(e => e.Id == exampleId)
             ?? throw new ArgumentException($"Example with Id {exampleId} not found.", nameof(exampleId));
