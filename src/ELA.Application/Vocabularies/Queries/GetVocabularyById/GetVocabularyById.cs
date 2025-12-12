@@ -2,7 +2,7 @@ using ELA.Vocabularies.Dtos;
 
 namespace ELA;
 
-public record GetVocabularyByIdQuery(int Id) : IRequest<VocabularyDto>;
+public record GetVocabularyByIdQuery(Guid Id) : IRequest<VocabularyDto>;
 
 public class GetVocabularyByIdQueryHandler : IRequestHandler<GetVocabularyByIdQuery, VocabularyDto>
 {

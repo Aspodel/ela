@@ -1,7 +1,7 @@
 namespace ELA.Decks.Dtos;
 
 public record DeckDto(
-    int Id,
+    Guid Id,
     string Name,
     string? Description,
     DateTimeOffset Created,
@@ -9,7 +9,7 @@ public record DeckDto(
 );
 
 public record DeckListItemDto(
-    int Id,
+    Guid Id,
     string Name,
     string? Description,
     DateTimeOffset Created,

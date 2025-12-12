@@ -2,7 +2,7 @@ using ELA.Decks.Dtos;
 
 namespace ELA;
 
-public record GetDueCardsForReviewQuery(int DeckId) : IRequest<List<CardDto>>;
+public record GetDueCardsForReviewQuery(Guid DeckId) : IRequest<List<CardDto>>;
 
 public class GetDueCardsForReviewQueryHandler : IRequestHandler<GetDueCardsForReviewQuery, List<CardDto>>
 {

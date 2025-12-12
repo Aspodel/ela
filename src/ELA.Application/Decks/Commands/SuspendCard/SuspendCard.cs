@@ -1,6 +1,6 @@
 namespace ELA;
 
-public record SuspendCardCommand(int CardId) : IRequest<Unit>;
+public record SuspendCardCommand(Guid CardId) : IRequest<Unit>;
 
 public class SuspendCardCommandHandler : IRequestHandler<SuspendCardCommand, Unit>
 {

@@ -3,7 +3,7 @@ using ELA.Decks.Dtos;
 namespace ELA;
 
 public record GetDeckCardsQuery(
-    int DeckId,
+    Guid DeckId,
     int PageNumber = 1,
     int PageSize = 10
 ) : IRequest<PaginatedList<CardDto>>;

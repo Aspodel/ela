@@ -2,7 +2,7 @@ using ELA.Decks.Dtos;
 
 namespace ELA;
 
-public record GetDeckByIdQuery(int Id) : IRequest<DeckDto>;
+public record GetDeckByIdQuery(Guid Id) : IRequest<DeckDto>;
 
 
 public class GetDeckByIdQueryHandler : IRequestHandler<GetDeckByIdQuery, DeckDto>

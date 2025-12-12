@@ -1,6 +1,6 @@
 namespace ELA;
 
-public record DeleteDeckCommand(int Id) : IRequest<Unit>;
+public record DeleteDeckCommand(Guid Id) : IRequest<Unit>;
 
 public class DeleteDeckCommandHandler : IRequestHandler<DeleteDeckCommand, Unit>
 {

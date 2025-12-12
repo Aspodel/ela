@@ -53,25 +53,13 @@ public class Question : BaseAuditableEntity
     }
 }
 
-public enum QuestionType
-{
-    MultipleChoice,
-    TrueFalse,
-    FillInTheBlank,
-    Listening,
-}
-
 public class ListeningQuestion : Question
 {
-    public string? AudioUrl { get; private set; }
     public string? Script { get; private set; }
-    public ListeningQuestion(
-        string text,
-        string? audioUrl,
-        string? script)
-        : base(text, QuestionType.Listening)
+    public string? AudioUrl { get; private set; }
+    public ListeningQuestion(string text, string? script, string? audioUrl) : base(text, QuestionType.Listening)
     {
-        AudioUrl = audioUrl;
         Script = script;
+        AudioUrl = audioUrl;
     }
 }

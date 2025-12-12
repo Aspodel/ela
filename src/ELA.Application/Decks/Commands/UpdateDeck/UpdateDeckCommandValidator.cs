@@ -5,8 +5,7 @@ public class UpdateDeckCommandValidator : AbstractValidator<UpdateDeckCommand>
     public UpdateDeckCommandValidator()
     {
         RuleFor(d => d.Id)
-            .NotEmpty().WithMessage("Id is required.")
-            .GreaterThan(0).WithMessage("Id must be greater than zero.");
+            .NotEmpty().WithMessage("Id is required.");
 
         RuleFor(d => d.Name)
             .NotEmpty().WithMessage("Deck name must not be empty.")

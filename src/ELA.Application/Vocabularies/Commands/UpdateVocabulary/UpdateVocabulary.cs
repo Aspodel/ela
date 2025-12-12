@@ -3,7 +3,7 @@ using ELA.Vocabularies.Dtos;
 namespace ELA;
 
 public record UpdateVocabularyCommand(
-    int Id,
+    Guid Id,
     string Text,
     string? IPA,
     List<UpdateDefinitionDto>? Definitions
@@ -36,7 +36,7 @@ public class UpdateVocabularyCommandHandler : IRequestHandler<UpdateVocabularyCo
         // ---- Process incoming definitions ----
         foreach (var defDto in incomingDefinitions)
         {
-            if (defDto.Id is null or <= 0)
+            if (defDto.Id is null)
             {
                 var newDefinition = vocabulary.AddDefinition(
                     defDto.Meaning,
@@ -77,7 +77,7 @@ public class UpdateVocabularyCommandHandler : IRequestHandler<UpdateVocabularyCo
 
         foreach (var exDto in incomingExamples)
         {
-            if (exDto.Id is null or <= 0)
+            if (exDto.Id is null)
             {
                 definition.AddExample(exDto.Text, exDto.Translation);
                 continue;

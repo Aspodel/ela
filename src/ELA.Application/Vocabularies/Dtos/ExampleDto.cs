@@ -1,7 +1,7 @@
 namespace ELA.Vocabularies.Dtos;
 
 public record ExampleDto(
-    int Id,
+    Guid Id,
     string Text,
     string? Translation
 );
@@ -12,7 +12,7 @@ public record CreateExampleDto(
 );
 
 public record UpdateExampleDto(
-    int? Id,
+    Guid? Id,
     string Text,
     string? Translation
 );

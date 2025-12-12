@@ -1,6 +1,6 @@
 namespace ELA;
 
-public record DeleteVocabularyCommand(int Id) : IRequest<Unit>;
+public record DeleteVocabularyCommand(Guid Id) : IRequest<Unit>;
 
 public class DeleteVocabularyCommandHandler : IRequestHandler<DeleteVocabularyCommand, Unit>
 {

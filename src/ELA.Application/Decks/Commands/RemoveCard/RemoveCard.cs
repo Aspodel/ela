@@ -1,6 +1,6 @@
 namespace ELA;
 
-public record RemoveCardCommand(int DeckId, int CardId) : IRequest<Unit>;
+public record RemoveCardCommand(Guid DeckId, Guid CardId) : IRequest<Unit>;
 
 public class RemoveCardCommandHandler : IRequestHandler<RemoveCardCommand, Unit>
 {

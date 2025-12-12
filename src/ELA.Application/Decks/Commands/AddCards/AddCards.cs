@@ -2,9 +2,9 @@ using ELA.Decks.Dtos;
 
 namespace ELA;
 
-public record AddCardsCommand(int DeckId, List<AddCardDto> Cards) : IRequest<List<int>>;
+public record AddCardsCommand(Guid DeckId, List<AddCardDto> Cards) : IRequest<List<Guid>>;
 
-public class AddCardsCommandHandler : IRequestHandler<AddCardsCommand, List<int>>
+public class AddCardsCommandHandler : IRequestHandler<AddCardsCommand, List<Guid>>
 {
     private readonly IApplicationDbContext _context;
 
@@ -13,7 +13,7 @@ public class AddCardsCommandHandler : IRequestHandler<AddCardsCommand, List<int>
         _context = context;
     }
 
-    public async Task<List<int>> Handle(AddCardsCommand request, CancellationToken cancellationToken)
+    public async Task<List<Guid>> Handle(AddCardsCommand request, CancellationToken cancellationToken)
     {
         var deck = await _context.Decks
             .Include(d => d.Cards)

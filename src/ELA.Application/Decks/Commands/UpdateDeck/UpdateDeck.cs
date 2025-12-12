@@ -1,6 +1,6 @@
 namespace ELA;
 
-public record UpdateDeckCommand(int Id, string Name, string? Description) : IRequest<Unit>;
+public record UpdateDeckCommand(Guid Id, string Name, string? Description) : IRequest<Unit>;
 
 public class UpdateDeckCommandHandler : IRequestHandler<UpdateDeckCommand, Unit>
 {

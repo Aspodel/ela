@@ -1,7 +1,7 @@
 namespace ELA.Vocabularies.Dtos;
 
 public record DefinitionDto(
-    int Id,
+    Guid Id,
     string Meaning,
     string? Translation,
     string? PartOfSpeech,
@@ -16,7 +16,7 @@ public record CreateDefinitionDto(
 );
 
 public record UpdateDefinitionDto(
-    int? Id,
+    Guid? Id,
     string Meaning,
     string? Translation,
     string? PartOfSpeech,

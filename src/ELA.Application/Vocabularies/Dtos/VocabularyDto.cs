@@ -1,14 +1,14 @@
 namespace ELA.Vocabularies.Dtos;
 
 public record VocabularyDto(
-    int Id,
+    Guid Id,
     string Text,
     string? IPA,
     List<DefinitionDto> Definitions
 );
 
 public record VocabularyListItemDto(
-    int Id,
+    Guid Id,
     string Text,
     string? IPA,
     int DefinitionCount,

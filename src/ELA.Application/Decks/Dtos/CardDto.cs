@@ -1,7 +1,7 @@
 namespace ELA.Decks.Dtos;
 
 public record CardDto(
-    int Id,
+    Guid Id,
     string Front,
     string Back,
     DateTimeOffset NextReview,

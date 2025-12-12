@@ -1,6 +1,6 @@
 namespace ELA;
 
-public record ActivateCardCommand(int CardId) : IRequest<Unit>;
+public record ActivateCardCommand(Guid CardId) : IRequest<Unit>;
 
 public class ActivateCardCommandHandler : IRequestHandler<ActivateCardCommand, Unit>
 {

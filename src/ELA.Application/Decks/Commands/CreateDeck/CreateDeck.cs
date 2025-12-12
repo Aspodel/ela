@@ -1,8 +1,8 @@
 namespace ELA;
 
-public record CreateDeckCommand(string Name, string? Description) : IRequest<int>;
+public record CreateDeckCommand(string Name, string? Description) : IRequest<Guid>;
 
-public class CreateDeckCommandHandler : IRequestHandler<CreateDeckCommand, int>
+public class CreateDeckCommandHandler : IRequestHandler<CreateDeckCommand, Guid>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUser _currentUser;
@@ -13,7 +13,7 @@ public class CreateDeckCommandHandler : IRequestHandler<CreateDeckCommand, int>
         _currentUser = currentUser;
     }
 
-    public async Task<int> Handle(CreateDeckCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateDeckCommand request, CancellationToken cancellationToken)
     {
         Guard.Against.NullOrEmpty(_currentUser.Id, nameof(_currentUser.Id));
 

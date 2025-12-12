@@ -7,8 +7,7 @@ public class UpdateVocabularyCommandValidator : AbstractValidator<UpdateVocabula
     public UpdateVocabularyCommandValidator()
     {
         RuleFor(v => v.Id)
-            .NotEmpty().WithMessage("Vocabulary Id is required.")
-            .GreaterThan(0).WithMessage("Vocabulary Id must be greater than 0.");
+            .NotEqual(Guid.Empty).WithMessage("Vocabulary Id is required.");
 
         RuleFor(v => v.Text)
             .NotEmpty().WithMessage("Vocabulary is required.")
@@ -26,10 +25,9 @@ public class UpdateDefinitionInputValidator : AbstractValidator<UpdateDefinition
 {
     public UpdateDefinitionInputValidator()
     {
-        // Allow null Id (new definition) or positive Id (existing)
         RuleFor(d => d.Id)
-            .Must(id => !id.HasValue || id.Value > 0)
-            .WithMessage("Definition ID must be greater than 0 if provided.");
+            .Must(id => id == null || id != Guid.Empty)
+            .WithMessage("Definition Id must be null or a valid Guid.");
 
         RuleFor(d => d.Meaning)
             .NotEmpty().WithMessage("Meaning is required.")
@@ -55,10 +53,9 @@ public class UpdateExampleInputValidator : AbstractValidator<UpdateExampleDto>
 {
     public UpdateExampleInputValidator()
     {
-        // Allow null Id (new example) or positive Id (existing)
         RuleFor(e => e.Id)
-            .Must(id => !id.HasValue || id.Value > 0)
-            .WithMessage("Example ID must be greater than 0 if provided.");
+            .Must(id => id == null || id != Guid.Empty)
+            .WithMessage("Example Id must be null or a valid Guid.");
 
         RuleFor(e => e.Text)
             .NotEmpty().WithMessage("Example is required.")

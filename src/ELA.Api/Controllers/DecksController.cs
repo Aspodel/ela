@@ -3,7 +3,7 @@ namespace ELA;
 public class DecksController : BaseController
 {
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken = default)
     {
         var result = await Mediator.Send(new GetDeckByIdQuery(id), cancellationToken);
         return Ok(result);
@@ -24,7 +24,7 @@ public class DecksController : BaseController
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] UpdateDeckCommand command, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDeckCommand command, CancellationToken cancellationToken = default)
     {
         if (id != command.Id) return BadRequest();
 
@@ -33,7 +33,7 @@ public class DecksController : BaseController
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken = default)
     {
         await Mediator.Send(new DeleteDeckCommand(id), cancellationToken);
         return NoContent();

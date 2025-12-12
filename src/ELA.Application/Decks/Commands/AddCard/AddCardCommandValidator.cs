@@ -5,8 +5,7 @@ public class AddCardCommandValidator : AbstractValidator<AddCardCommand>
     public AddCardCommandValidator()
     {
         RuleFor(c => c.DeckId)
-            .NotEmpty().WithMessage("Id is required.")
-            .GreaterThan(0).WithMessage("Id must be greater than zero.");
+            .NotEmpty().WithMessage("Id is required.");
 
         RuleFor(c => c.Front)
             .NotEmpty().WithMessage("Front card text is required.")

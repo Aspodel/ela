@@ -1,6 +1,6 @@
 namespace ELA;
 
-public record ReviewCardCommand(int CardId, int QualityRating, DateTimeOffset ReviewDate) : IRequest<Unit>;
+public record ReviewCardCommand(Guid CardId, int QualityRating, DateTimeOffset ReviewDate) : IRequest<Unit>;
 
 public class ReviewCardCommandHandler : IRequestHandler<ReviewCardCommand, Unit>
 {

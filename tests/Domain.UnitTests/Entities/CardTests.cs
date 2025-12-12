@@ -7,11 +7,11 @@ public class CardTests
     [Fact]
     public void Should_Create_Card()
     {
-        var card = new Card("Front", "Back", 1);
+        var card = new Card("Front", "Back", Guid.NewGuid());
 
         card.Front.Should().Be("Front");
         card.Back.Should().Be("Back");
-        card.DeckId.Should().Be(1);
+        card.DeckId.Should().Be(Guid.NewGuid());
         card.Suspended.Should().BeFalse();
         card.ReviewLogs.Should().BeEmpty();
     }
@@ -19,7 +19,7 @@ public class CardTests
     [Fact]
     public void Should_Throw_When_Front_IsEmpty()
     {
-        Action act = () => new Card("", "Back", 1);
+        Action act = () => new Card("", "Back", Guid.NewGuid());
 
         act.Should().Throw<ArgumentException>();
     }
@@ -27,7 +27,7 @@ public class CardTests
     [Fact]
     public void Should_Throw_When_Back_IsEmpty()
     {
-        Action act = () => new Card("Front", "", 1);
+        Action act = () => new Card("Front", "", Guid.NewGuid());
 
         act.Should().Throw<ArgumentException>();
     }
@@ -35,7 +35,7 @@ public class CardTests
     [Fact]
     public void Should_Update_Card()
     {
-        var card = new Card("Front", "Back", 1);
+        var card = new Card("Front", "Back", Guid.NewGuid());
 
         card.Update("New Front", "New Back");
 
@@ -46,7 +46,7 @@ public class CardTests
     [Fact]
     public void Should_Suspend_And_Activate_Card()
     {
-        var card = new Card("Front", "Back", 1);
+        var card = new Card("Front", "Back", Guid.NewGuid());
 
         card.Suspend();
         card.Suspended.Should().BeTrue();
@@ -58,7 +58,7 @@ public class CardTests
     [Fact]
     public void Should_Add_ReviewResult()
     {
-        var card = new Card("Front", "Back", 1);
+        var card = new Card("Front", "Back", Guid.NewGuid());
         var reviewDate = DateTimeOffset.UtcNow;
 
         card.AddReviewResult(
@@ -79,7 +79,7 @@ public class CardTests
     [Fact]
     public void AddReviewResult_Should_Throw_When_Suspended()
     {
-        var card = new Card("Front", "Back", 1);
+        var card = new Card("Front", "Back", Guid.NewGuid());
         card.Suspend();
 
         Action act = () => card.AddReviewResult(3, DateTimeOffset.UtcNow, 5, 2.5, 2, DateTimeOffset.UtcNow.AddDays(5));
@@ -91,7 +91,7 @@ public class CardTests
     [Fact]
     public void AddReviewResult_Should_Throw_When_InvalidQualityRating()
     {
-        var card = new Card("Front", "Back", 1);
+        var card = new Card("Front", "Back", Guid.NewGuid());
 
         Action act = () => card.AddReviewResult(-1, DateTimeOffset.UtcNow, 5, 2.5, 2, DateTimeOffset.UtcNow.AddDays(5));
 

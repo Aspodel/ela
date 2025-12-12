@@ -7,19 +7,19 @@ public class DefinitionTests
     [Fact]
     public void Should_Create_Definition()
     {
-        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, 1);
+        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, Guid.NewGuid());
 
         def.Meaning.Should().Be("A fruit");
         def.Translation.Should().Be("Quả táo");
         def.PartOfSpeech.Should().Be(PartOfSpeech.Noun);
-        def.VocabularyId.Should().Be(1);
+        def.VocabularyId.Should().Be(Guid.NewGuid());
         def.Examples.Should().BeEmpty();
     }
 
     [Fact]
     public void Should_Throw_When_Meaning_IsEmpty()
     {
-        Action act = () => new Definition("", "Quả táo", PartOfSpeech.Noun, 1);
+        Action act = () => new Definition("", "Quả táo", PartOfSpeech.Noun, Guid.NewGuid());
 
         act.Should().Throw<ArgumentException>();
     }
@@ -27,7 +27,7 @@ public class DefinitionTests
     [Fact]
     public void Should_Throw_When_Translation_IsEmpty()
     {
-        Action act = () => new Definition("A fruit", "", PartOfSpeech.Noun, 1);
+        Action act = () => new Definition("A fruit", "", PartOfSpeech.Noun, Guid.NewGuid());
 
         act.Should().Throw<ArgumentException>();
     }
@@ -35,7 +35,7 @@ public class DefinitionTests
     [Fact]
     public void Should_Update_Definition()
     {
-        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, 1);
+        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, Guid.NewGuid());
 
         def.Update("A red fruit", "Trái táo", PartOfSpeech.Adjective);
 
@@ -47,7 +47,7 @@ public class DefinitionTests
     [Fact]
     public void Should_Add_Example()
     {
-        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, 1);
+        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, Guid.NewGuid());
 
         def.AddExample("I eat an apple", "Tôi ăn một quả táo");
 
@@ -58,9 +58,9 @@ public class DefinitionTests
     [Fact]
     public void Should_Remove_Example()
     {
-        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, 1);
+        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, Guid.NewGuid());
         def.AddExample("I eat an apple", "Tôi ăn một quả táo");
-        var example = def.Examples.First();
+        var example = def.Examples[0];
 
         def.RemoveExample(example.Id);
 
@@ -70,9 +70,9 @@ public class DefinitionTests
     [Fact]
     public void RemoveExample_Should_Throw_When_NotFound()
     {
-        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, 1);
+        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, Guid.NewGuid());
 
-        Action act = () => def.RemoveExample(999);
+        Action act = () => def.RemoveExample(Guid.NewGuid());
 
         act.Should().Throw<ArgumentException>()
             .WithMessage("Example not found.*");
@@ -81,9 +81,9 @@ public class DefinitionTests
     [Fact]
     public void Should_Update_Example()
     {
-        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, 1);
+        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, Guid.NewGuid());
         def.AddExample("I eat an apple", "Tôi ăn một quả táo");
-        var example = def.Examples.First();
+        var example = def.Examples[0];
 
         def.UpdateExample(example.Id, "I like apples", "Tôi thích táo");
 
@@ -94,9 +94,9 @@ public class DefinitionTests
     [Fact]
     public void UpdateExample_Should_Throw_When_NotFound()
     {
-        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, 1);
+        var def = new Definition("A fruit", "Quả táo", PartOfSpeech.Noun, Guid.NewGuid());
 
-        Action act = () => def.UpdateExample(999, "new text", "new translation");
+        Action act = () => def.UpdateExample(Guid.NewGuid(), "new text", "new translation");
 
         act.Should().Throw<ArgumentException>()
             .WithMessage("Example not found.*");

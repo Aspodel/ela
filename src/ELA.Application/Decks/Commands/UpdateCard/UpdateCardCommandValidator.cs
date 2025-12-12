@@ -5,12 +5,10 @@ public class UpdateCardCommandValidator : AbstractValidator<UpdateCardCommand>
     public UpdateCardCommandValidator()
     {
         RuleFor(c => c.DeckId)
-            .NotEmpty().WithMessage("DeckId cannot be empty.")
-            .GreaterThan(0).WithMessage("DeckId must be greater than 0.");
+            .NotEmpty().WithMessage("DeckId cannot be empty.");
 
         RuleFor(c => c.CardId)
-            .NotEmpty().WithMessage("CardId cannot be empty.")
-            .GreaterThan(0).WithMessage("CardId must be greater than 0.");
+            .NotEmpty().WithMessage("CardId cannot be empty.");
 
         RuleFor(c => c.Front)
             .NotEmpty().WithMessage("Front card text cannot be empty.")

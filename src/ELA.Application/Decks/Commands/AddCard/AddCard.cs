@@ -1,8 +1,8 @@
 namespace ELA;
 
-public record AddCardCommand(int DeckId, string Front, string Back) : IRequest<int>;
+public record AddCardCommand(Guid DeckId, string Front, string Back) : IRequest<Guid>;
 
-public class AddCardCommandHandler : IRequestHandler<AddCardCommand, int>
+public class AddCardCommandHandler : IRequestHandler<AddCardCommand, Guid>
 {
     private readonly IApplicationDbContext _context;
 
@@ -11,7 +11,7 @@ public class AddCardCommandHandler : IRequestHandler<AddCardCommand, int>
         _context = context;
     }
 
-    public async Task<int> Handle(AddCardCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(AddCardCommand request, CancellationToken cancellationToken)
     {
         var deck = await _context.Decks
             .Include(d => d.Cards)

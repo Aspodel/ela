@@ -1,6 +1,6 @@
 namespace ELA;
 
-public record UpdateCardCommand(int DeckId, int CardId, string Front, string Back) : IRequest<Unit>;
+public record UpdateCardCommand(Guid DeckId, Guid CardId, string Front, string Back) : IRequest<Unit>;
 
 public class UpdateCardCommandHandler : IRequestHandler<UpdateCardCommand, Unit>
 {

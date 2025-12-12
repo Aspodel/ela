@@ -71,7 +71,7 @@ public class VocabularyTests
     {
         var vocab = new Vocabulary("apple", "user1", "ˈæp.əl");
 
-        Action act = () => vocab.RemoveDefinition(999);
+        Action act = () => vocab.RemoveDefinition(Guid.NewGuid());
 
         act.Should().Throw<ArgumentException>()
             .WithMessage("Definition not found.*");
@@ -95,7 +95,7 @@ public class VocabularyTests
     {
         var vocab = new Vocabulary("apple", "user1", "ˈæp.əl");
 
-        Action act = () => vocab.UpdateDefinition(999, "meaning", "translation", PartOfSpeech.Verb);
+        Action act = () => vocab.UpdateDefinition(Guid.NewGuid(), "meaning", "translation", PartOfSpeech.Verb);
 
         act.Should().Throw<ArgumentException>()
             .WithMessage("Definition not found.*");
