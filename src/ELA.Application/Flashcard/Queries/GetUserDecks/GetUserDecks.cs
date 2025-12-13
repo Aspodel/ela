@@ -1,4 +1,4 @@
-using ELA.Decks.Dtos;
+using ELA.Flashcard.Dtos;
 
 namespace ELA;
 

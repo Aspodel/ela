@@ -1,4 +1,4 @@
-namespace ELA.Decks.Dtos;
+namespace ELA.Flashcard.Dtos;
 
 public record DeckDto(
     Guid Id,

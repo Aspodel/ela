@@ -22,6 +22,42 @@ namespace ELA.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ELA.Answer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("QuestionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Answers");
+                });
+
             modelBuilder.Entity("ELA.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -97,11 +133,9 @@ namespace ELA.Infrastructure.Migrations
 
             modelBuilder.Entity("ELA.Card", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Back")
                         .IsRequired()
@@ -114,8 +148,8 @@ namespace ELA.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
-                    b.Property<int>("DeckId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("DeckId")
+                        .HasColumnType("uuid");
 
                     b.Property<double>("EaseFactor")
                         .HasColumnType("double precision");
@@ -155,11 +189,9 @@ namespace ELA.Infrastructure.Migrations
 
             modelBuilder.Entity("ELA.Deck", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("timestamp with time zone");
@@ -195,11 +227,9 @@ namespace ELA.Infrastructure.Migrations
 
             modelBuilder.Entity("ELA.Definition", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Meaning")
                         .IsRequired()
@@ -210,8 +240,8 @@ namespace ELA.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("VocabularyId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("VocabularyId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -222,14 +252,12 @@ namespace ELA.Infrastructure.Migrations
 
             modelBuilder.Entity("ELA.Example", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("DefinitionId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("DefinitionId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -245,6 +273,78 @@ namespace ELA.Infrastructure.Migrations
                     b.HasIndex("DefinitionId");
 
                     b.ToTable("Examples");
+                });
+
+            modelBuilder.Entity("ELA.Question", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Explanation")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<int>("QuestionType")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("QuizId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("ELA.Quiz", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Quizzes");
                 });
 
             modelBuilder.Entity("ELA.RefreshToken", b =>
@@ -286,14 +386,12 @@ namespace ELA.Infrastructure.Migrations
 
             modelBuilder.Entity("ELA.ReviewLog", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CardId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("CardId")
+                        .HasColumnType("uuid");
 
                     b.Property<double>("EaseFactor")
                         .HasColumnType("double precision");
@@ -319,11 +417,9 @@ namespace ELA.Infrastructure.Migrations
 
             modelBuilder.Entity("ELA.Vocabulary", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("timestamp with time zone");
@@ -489,6 +585,14 @@ namespace ELA.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ELA.Answer", b =>
+                {
+                    b.HasOne("ELA.Question", null)
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("ELA.Card", b =>
                 {
                     b.HasOne("ELA.Deck", "Deck")
@@ -519,8 +623,8 @@ namespace ELA.Infrastructure.Migrations
 
                     b.OwnsOne("ELA.PartOfSpeech", "PartOfSpeech", b1 =>
                         {
-                            b1.Property<int>("DefinitionId")
-                                .HasColumnType("integer");
+                            b1.Property<Guid>("DefinitionId")
+                                .HasColumnType("uuid");
 
                             b1.Property<string>("Abbreviation")
                                 .HasMaxLength(10)
@@ -550,6 +654,14 @@ namespace ELA.Infrastructure.Migrations
                     b.HasOne("ELA.Definition", null)
                         .WithMany("Examples")
                         .HasForeignKey("DefinitionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ELA.Question", b =>
+                {
+                    b.HasOne("ELA.Quiz", null)
+                        .WithMany("Questions")
+                        .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -635,6 +747,16 @@ namespace ELA.Infrastructure.Migrations
             modelBuilder.Entity("ELA.Definition", b =>
                 {
                     b.Navigation("Examples");
+                });
+
+            modelBuilder.Entity("ELA.Question", b =>
+                {
+                    b.Navigation("Answers");
+                });
+
+            modelBuilder.Entity("ELA.Quiz", b =>
+                {
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("ELA.Vocabulary", b =>

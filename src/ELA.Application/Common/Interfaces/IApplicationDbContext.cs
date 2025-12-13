@@ -9,6 +9,9 @@ public interface IApplicationDbContext
     DbSet<Card> Cards { get; }
     DbSet<ReviewLog> ReviewLogs { get; }
     DbSet<RefreshToken> RefreshTokens { get; }
+    DbSet<Quiz> Quizzes { get; }
+    DbSet<Question> Questions { get; }
+    DbSet<Answer> Answers { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

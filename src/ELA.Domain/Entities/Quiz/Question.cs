@@ -32,7 +32,7 @@ public class Question : BaseAuditableEntity
 
     public Answer AddAnswer(string text, bool isCorrect)
     {
-        var answer = new Answer(text, isCorrect, Id);
+        var answer = new Answer(text, isCorrect);
         _answers.Add(answer);
         return answer;
     }
