@@ -14,9 +14,9 @@ public class Quiz : BaseAuditableEntity
         Description = description;
     }
 
-    public Question AddQuestion(string text, QuestionType questionType)
+    public Question AddQuestion(string text, QuestionType questionType = QuestionType.MultipleChoice, string? explanation = null)
     {
-        var question = new Question(text, questionType);
+        var question = new Question(text, questionType, explanation);
         _questions.Add(question);
         return question;
     }

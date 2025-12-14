@@ -9,10 +9,11 @@ public class Question : BaseAuditableEntity
     private readonly List<Answer> _answers = [];
     public IReadOnlyCollection<Answer> Answers => _answers.AsReadOnly();
 
-    public Question(string text, QuestionType questionType)
+    public Question(string text, QuestionType questionType = QuestionType.MultipleChoice, string? explanation = null)
     {
         Text = text;
         QuestionType = questionType;
+        Explanation = explanation;
     }
 
     public void UpdateText(string newText)

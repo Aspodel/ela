@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
+using ELA.Infrastructure.Persistence.Seed;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -65,6 +66,10 @@ public static class DependencyInjection
         builder.Services.AddTransient<ICookieService, CookieService>();
         builder.Services.AddTransient<ITokenService, TokenService>();
         builder.Services.AddTransient<ISpacedRepetitionScheduler, Sm2Scheduler>();
+
+        builder.Services.AddTransient<ISeeder, VocabularySeeder>();
+        builder.Services.AddTransient<ISeeder, DeckSeeder>();
+        builder.Services.AddTransient<ISeeder, QuizSeeder>();
 
         builder.Services.AddAuthorization(options =>
             options.AddPolicy("CanGet", policy => policy.RequireRole(Roles.Administrator)));
