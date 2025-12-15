@@ -1,5 +1,5 @@
 export interface Question {
-    id: number;
+    id: string;
     question: string;
     options: string[];
     correctAnswer: number;
@@ -7,7 +7,7 @@ export interface Question {
 }
 
 export interface Quiz {
-    id: number;
+    id: string;
     title: string;
     description: string;
     difficulty: 'Easy' | 'Medium' | 'Hard';
@@ -21,10 +21,10 @@ export interface Quiz {
 
 export interface QuizAttempt {
     id: string;
-    quizId: number;
+    quizId: string;
     date: string; // ISO string
     score: number;
     totalQuestions: number;
-    userAnswers: Record<number, number>;
+    userAnswers: Record<string, number>;
     timeSpent: number; // in seconds
 }

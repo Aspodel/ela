@@ -1,10 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import type { Question } from '../types';
 
 interface QuizNavigationProps {
     totalQuestions: number;
     currentQuestionIndex: number;
-    userAnswers: Record<number, number>;
+    userAnswers: Record<string, number>;
+    questions: Question[];
     onNavigate: (index: number) => void;
 }
 
@@ -12,12 +14,14 @@ export function QuizNavigation({
     totalQuestions,
     currentQuestionIndex,
     userAnswers,
+    questions,
     onNavigate,
 }: QuizNavigationProps) {
     return (
         <div className='grid grid-cols-5 gap-2'>
             {Array.from({ length: totalQuestions }).map((_, index) => {
-                const isAnswered = userAnswers[index] !== undefined;
+                const questionId = questions[index]?.id;
+                const isAnswered = questionId ? userAnswers[questionId] !== undefined : false;
                 const isCurrent = currentQuestionIndex === index;
 
                 return (

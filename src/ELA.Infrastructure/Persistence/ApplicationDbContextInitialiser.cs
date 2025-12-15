@@ -96,8 +96,6 @@ public class ApplicationDbContextInitialiser
             await _userManager.CreateAsync(user, "User1!");
         }
 
-        // Default data
-        // Default data
         foreach (var seeder in _seeders)
         {
             await seeder.SeedAsync(_context);

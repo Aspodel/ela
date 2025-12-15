@@ -12,6 +12,7 @@ public interface IApplicationDbContext
     DbSet<Quiz> Quizzes { get; }
     DbSet<Question> Questions { get; }
     DbSet<Answer> Answers { get; }
+    DbSet<QuizSubmission> QuizSubmissions { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

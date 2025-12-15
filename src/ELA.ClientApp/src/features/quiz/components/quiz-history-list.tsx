@@ -20,14 +20,18 @@ export function QuizHistoryList() {
     const [selectedAttempt, setSelectedAttempt] = useState<QuizAttempt | null>(null);
 
     useEffect(() => {
-        setAttempts(historyService.getAllAttempts());
+        const fetchAttempts = async () => {
+            const data = await historyService.getAllAttempts();
+            setAttempts(data);
+        };
+        fetchAttempts();
     }, []);
 
-    const getQuizTitle = (quizId: number) => {
+    const getQuizTitle = (quizId: string) => {
         return MOCK_QUIZZES.find((q) => q.id === quizId)?.title || 'Unknown Quiz';
     };
 
-    const getQuizQuestions = (quizId: number) => {
+    const getQuizQuestions = (quizId: string) => {
         return MOCK_QUIZZES.find((q) => q.id === quizId)?.questions || [];
     };
 

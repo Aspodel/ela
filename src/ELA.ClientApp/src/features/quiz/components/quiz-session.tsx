@@ -21,7 +21,7 @@ import { QuizNavigation } from './quiz-navigation';
 
 export function QuizSession({ quizId }: { quizId: string }) {
     const navigate = useNavigate();
-    const quiz = MOCK_QUIZZES.find((q) => q.id === Number(quizId));
+    const quiz = MOCK_QUIZZES.find((q) => q.id === quizId);
 
     if (!quiz) {
         return <div>Quiz not found</div>;
@@ -29,7 +29,7 @@ export function QuizSession({ quizId }: { quizId: string }) {
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-    const [userAnswers, setUserAnswers] = useState<Record<number, number>>({});
+    const [userAnswers, setUserAnswers] = useState<Record<string, number>>({});
     const [showResults, setShowResults] = useState(false);
     const [timeLeft, setTimeLeft] = useState(quiz.timeLimit);
     const [isPaused, setIsPaused] = useState(false);
@@ -59,8 +59,9 @@ export function QuizSession({ quizId }: { quizId: string }) {
     useEffect(() => {
         if (showResults) {
             import('../services/history-service').then(({ historyService }) => {
-                const score = Object.entries(userAnswers).reduce((acc, [index, answer]) => {
-                    return acc + (quiz.questions[Number(index)].correctAnswer === answer ? 1 : 0);
+                const score = quiz.questions.reduce((acc, q) => {
+                    const answer = userAnswers[q.id];
+                    return acc + (q.correctAnswer === answer ? 1 : 0);
                 }, 0);
 
                 historyService.saveAttempt({
@@ -90,15 +91,18 @@ export function QuizSession({ quizId }: { quizId: string }) {
             // Save answer
             const newUserAnswers = {
                 ...userAnswers,
-                [currentQuestionIndex]: selectedAnswer,
+                [currentQuestion.id]: selectedAnswer,
             };
             setUserAnswers(newUserAnswers);
         }
 
         if (currentQuestionIndex < quiz.questions.length - 1) {
-            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            const nextIndex = currentQuestionIndex + 1;
+            setCurrentQuestionIndex(nextIndex);
+
             // Check if next question is already answered
-            const nextAnswer = userAnswers[currentQuestionIndex + 1];
+            const nextQuestionId = quiz.questions[nextIndex].id;
+            const nextAnswer = userAnswers[nextQuestionId];
             setSelectedAnswer(nextAnswer !== undefined ? nextAnswer : null);
         } else {
             setShowResults(true);
@@ -110,12 +114,13 @@ export function QuizSession({ quizId }: { quizId: string }) {
         if (selectedAnswer !== null) {
             setUserAnswers((prev) => ({
                 ...prev,
-                [currentQuestionIndex]: selectedAnswer,
+                [currentQuestion.id]: selectedAnswer,
             }));
         }
 
         setCurrentQuestionIndex(index);
-        const existingAnswer = userAnswers[index];
+        const targetQuestionId = quiz.questions[index].id;
+        const existingAnswer = userAnswers[targetQuestionId];
         setSelectedAnswer(existingAnswer !== undefined ? existingAnswer : null);
     };
 
@@ -217,6 +222,7 @@ export function QuizSession({ quizId }: { quizId: string }) {
                             totalQuestions={quiz.questions.length}
                             currentQuestionIndex={currentQuestionIndex}
                             userAnswers={userAnswers}
+                            questions={quiz.questions}
                             onNavigate={handleNavigate}
                         />
                     </div>

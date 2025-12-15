@@ -8,15 +8,16 @@ import type { Question } from '../types';
 
 interface QuizResultsProps {
     questions: Question[];
-    userAnswers: Record<number, number>;
+    userAnswers: Record<string, number>;
     onRetry: () => void;
 }
 
 export function QuizResults({ questions, userAnswers, onRetry }: QuizResultsProps) {
     const calculateScore = () => {
         let correct = 0;
-        Object.entries(userAnswers).forEach(([index, answer]) => {
-            if (questions[Number(index)].correctAnswer === answer) {
+        questions.forEach((q) => {
+            const userAnswer = userAnswers[q.id];
+            if (userAnswer === q.correctAnswer) {
                 correct++;
             }
         });
@@ -67,7 +68,7 @@ export function QuizResults({ questions, userAnswers, onRetry }: QuizResultsProp
                         <ScrollArea type='always' className='h-[500px] pr-0'>
                             <div className='space-y-6 pr-4'>
                                 {questions.map((q, index) => {
-                                    const userAnswer = userAnswers[index];
+                                    const userAnswer = userAnswers[q.id];
                                     const isCorrect = userAnswer === q.correctAnswer;
 
                                     return (
@@ -89,7 +90,7 @@ export function QuizResults({ questions, userAnswers, onRetry }: QuizResultsProp
                                                                 variant='destructive'
                                                                 className='bg-red-100 text-red-800 hover:bg-red-100 border-red-200'
                                                             >
-                                                                Your Answer: {q.options[userAnswer]}
+                                                                Your Answer: {userAnswer !== undefined ? q.options[userAnswer] : 'Skipped'}
                                                             </Badge>
                                                         )}
                                                         <Badge
