@@ -1,8 +1,6 @@
-using ELA.Infrastructure.Persistence.Seed;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace ELA;
 
@@ -25,9 +23,9 @@ public class ApplicationDbContextInitialiser
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly IEnumerable<ISeeder> _seeders;
+    private readonly IEnumerable<IDataSeeder> _seeders;
 
-    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IEnumerable<ISeeder> seeders)
+    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IEnumerable<IDataSeeder> seeders)
     {
         _logger = logger;
         _context = context;
@@ -41,11 +39,11 @@ public class ApplicationDbContextInitialiser
         try
         {
             // Persist database
-            // await _context.Database.MigrateAsync();
+            await _context.Database.MigrateAsync();
 
             // Local test: Ensure the database is recreated each time in debug mode
             // await _context.Database.EnsureDeletedAsync();
-            await _context.Database.EnsureCreatedAsync();
+            // await _context.Database.EnsureCreatedAsync();
         }
         catch (Exception ex)
         {
@@ -85,7 +83,7 @@ public class ApplicationDbContextInitialiser
             await _userManager.CreateAsync(administrator, "Administrator1!");
             if (!string.IsNullOrWhiteSpace(administratorRole.Name))
             {
-                await _userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
+                await _userManager.AddToRolesAsync(administrator, [administratorRole.Name]);
             }
         }
 

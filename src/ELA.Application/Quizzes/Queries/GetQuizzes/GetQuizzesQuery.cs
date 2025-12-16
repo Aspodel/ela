@@ -1,4 +1,4 @@
-namespace ELA;
+namespace ELA.Application.Quizzes.Queries.GetQuizzes;
 
 public record GetQuizzesQuery : IRequest<List<QuizDto>>;
 

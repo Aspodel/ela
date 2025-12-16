@@ -1,10 +1,8 @@
-using ELA;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
-namespace ELA.Infrastructure.Persistence.Seed;
+namespace ELA;
 
-public class DeckSeeder : ISeeder
+public class DeckSeeder : IDataSeeder
 {
     private readonly UserManager<ApplicationUser> _userManager;
 

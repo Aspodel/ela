@@ -5,8 +5,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using System.Security.Claims;
-using ELA.Infrastructure.Persistence.Seed;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -26,7 +24,6 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString);
             options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
         });
-
 
         builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
@@ -67,11 +64,11 @@ public static class DependencyInjection
         builder.Services.AddTransient<ITokenService, TokenService>();
         builder.Services.AddTransient<ISpacedRepetitionScheduler, Sm2Scheduler>();
 
-        builder.Services.AddTransient<ISeeder, VocabularySeeder>();
-        builder.Services.AddTransient<ISeeder, DeckSeeder>();
-        builder.Services.AddTransient<ISeeder, QuizSeeder>();
+        builder.Services.AddTransient<IDataSeeder, VocabularySeeder>();
+        builder.Services.AddTransient<IDataSeeder, DeckSeeder>();
+        builder.Services.AddTransient<IDataSeeder, QuizSeeder>();
 
-        builder.Services.AddAuthorization(options =>
-            options.AddPolicy("CanGet", policy => policy.RequireRole(Roles.Administrator)));
+        builder.Services.AddAuthorizationBuilder()
+            .AddPolicy("CanGet", policy => policy.RequireRole(Roles.Administrator));
     }
 }

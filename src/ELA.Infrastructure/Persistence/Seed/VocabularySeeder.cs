@@ -1,23 +1,23 @@
-using ELA;
-using ELA.Infrastructure.Persistence.Seed;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
-namespace ELA.Infrastructure.Persistence.Seed;
+namespace ELA;
 
-public class VocabularySeeder : ISeeder
+public class VocabularySeeder : IDataSeeder
 {
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly ILogger<VocabularySeeder> _logger;
 
-    public VocabularySeeder(UserManager<ApplicationUser> userManager)
+    public VocabularySeeder(UserManager<ApplicationUser> userManager, ILogger<VocabularySeeder> logger)
     {
         _userManager = userManager;
+        _logger = logger;
     }
 
     public async Task SeedAsync(ApplicationDbContext context)
     {
         if (await context.Vocabularies.AnyAsync())
         {
+            _logger.LogInformation("Vocabulary already seeded");
             return;
         }
 
