@@ -38,6 +38,7 @@ export function Header() {
     { label: 'Vocabulary', to: '/app/vocabulary', icon: CloudyIcon },
     { label: 'Flashcard', to: '/app/flashcard', icon: FolderIcon },
     { label: 'Quiz', to: '/app/quiz', icon: BrainIcon },
+    { label: 'Mock Test', to: '/app/mock-test', icon: BrainIcon },
   ];
 
   return (

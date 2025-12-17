@@ -19,8 +19,13 @@ import { Route as AuthSignupRouteImport } from './app/routes/_auth/signup'
 import { Route as AuthSigninRouteImport } from './app/routes/_auth/signin'
 import { Route as AppVocabularyRouteRouteImport } from './app/routes/app/vocabulary/route'
 import { Route as AppQuizIndexRouteImport } from './app/routes/app/quiz/index'
+import { Route as AppMockTestIndexRouteImport } from './app/routes/app/mock-test/index'
 import { Route as AppFlashcardIndexRouteImport } from './app/routes/app/flashcard/index'
 import { Route as AppQuizQuizIdRouteImport } from './app/routes/app/quiz/$quizId'
+import { Route as AppMockTestWritingRouteImport } from './app/routes/app/mock-test/writing'
+import { Route as AppMockTestSpeakingRouteImport } from './app/routes/app/mock-test/speaking'
+import { Route as AppMockTestReadingRouteImport } from './app/routes/app/mock-test/reading'
+import { Route as AppMockTestListeningRouteImport } from './app/routes/app/mock-test/listening'
 import { Route as AppFlashcardDeckIdIndexRouteImport } from './app/routes/app/flashcard/$deckId/index'
 import { Route as AppFlashcardDeckIdStudyRouteImport } from './app/routes/app/flashcard/$deckId/study'
 
@@ -73,6 +78,11 @@ const AppQuizIndexRoute = AppQuizIndexRouteImport.update({
   path: '/quiz/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppMockTestIndexRoute = AppMockTestIndexRouteImport.update({
+  id: '/mock-test/',
+  path: '/mock-test/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppFlashcardIndexRoute = AppFlashcardIndexRouteImport.update({
   id: '/flashcard/',
   path: '/flashcard/',
@@ -81,6 +91,26 @@ const AppFlashcardIndexRoute = AppFlashcardIndexRouteImport.update({
 const AppQuizQuizIdRoute = AppQuizQuizIdRouteImport.update({
   id: '/quiz/$quizId',
   path: '/quiz/$quizId',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppMockTestWritingRoute = AppMockTestWritingRouteImport.update({
+  id: '/mock-test/writing',
+  path: '/mock-test/writing',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppMockTestSpeakingRoute = AppMockTestSpeakingRouteImport.update({
+  id: '/mock-test/speaking',
+  path: '/mock-test/speaking',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppMockTestReadingRoute = AppMockTestReadingRouteImport.update({
+  id: '/mock-test/reading',
+  path: '/mock-test/reading',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppMockTestListeningRoute = AppMockTestListeningRouteImport.update({
+  id: '/mock-test/listening',
+  path: '/mock-test/listening',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppFlashcardDeckIdIndexRoute = AppFlashcardDeckIdIndexRouteImport.update({
@@ -103,8 +133,13 @@ export interface FileRoutesByFullPath {
   '/signup': typeof AuthSignupRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/': typeof AppIndexRoute
+  '/app/mock-test/listening': typeof AppMockTestListeningRoute
+  '/app/mock-test/reading': typeof AppMockTestReadingRoute
+  '/app/mock-test/speaking': typeof AppMockTestSpeakingRoute
+  '/app/mock-test/writing': typeof AppMockTestWritingRoute
   '/app/quiz/$quizId': typeof AppQuizQuizIdRoute
   '/app/flashcard': typeof AppFlashcardIndexRoute
+  '/app/mock-test': typeof AppMockTestIndexRoute
   '/app/quiz': typeof AppQuizIndexRoute
   '/app/flashcard/$deckId/study': typeof AppFlashcardDeckIdStudyRoute
   '/app/flashcard/$deckId': typeof AppFlashcardDeckIdIndexRoute
@@ -117,8 +152,13 @@ export interface FileRoutesByTo {
   '/signup': typeof AuthSignupRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app': typeof AppIndexRoute
+  '/app/mock-test/listening': typeof AppMockTestListeningRoute
+  '/app/mock-test/reading': typeof AppMockTestReadingRoute
+  '/app/mock-test/speaking': typeof AppMockTestSpeakingRoute
+  '/app/mock-test/writing': typeof AppMockTestWritingRoute
   '/app/quiz/$quizId': typeof AppQuizQuizIdRoute
   '/app/flashcard': typeof AppFlashcardIndexRoute
+  '/app/mock-test': typeof AppMockTestIndexRoute
   '/app/quiz': typeof AppQuizIndexRoute
   '/app/flashcard/$deckId/study': typeof AppFlashcardDeckIdStudyRoute
   '/app/flashcard/$deckId': typeof AppFlashcardDeckIdIndexRoute
@@ -134,8 +174,13 @@ export interface FileRoutesById {
   '/_auth/signup': typeof AuthSignupRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/': typeof AppIndexRoute
+  '/app/mock-test/listening': typeof AppMockTestListeningRoute
+  '/app/mock-test/reading': typeof AppMockTestReadingRoute
+  '/app/mock-test/speaking': typeof AppMockTestSpeakingRoute
+  '/app/mock-test/writing': typeof AppMockTestWritingRoute
   '/app/quiz/$quizId': typeof AppQuizQuizIdRoute
   '/app/flashcard/': typeof AppFlashcardIndexRoute
+  '/app/mock-test/': typeof AppMockTestIndexRoute
   '/app/quiz/': typeof AppQuizIndexRoute
   '/app/flashcard/$deckId/study': typeof AppFlashcardDeckIdStudyRoute
   '/app/flashcard/$deckId/': typeof AppFlashcardDeckIdIndexRoute
@@ -151,8 +196,13 @@ export interface FileRouteTypes {
     | '/signup'
     | '/app/dashboard'
     | '/app/'
+    | '/app/mock-test/listening'
+    | '/app/mock-test/reading'
+    | '/app/mock-test/speaking'
+    | '/app/mock-test/writing'
     | '/app/quiz/$quizId'
     | '/app/flashcard'
+    | '/app/mock-test'
     | '/app/quiz'
     | '/app/flashcard/$deckId/study'
     | '/app/flashcard/$deckId'
@@ -165,8 +215,13 @@ export interface FileRouteTypes {
     | '/signup'
     | '/app/dashboard'
     | '/app'
+    | '/app/mock-test/listening'
+    | '/app/mock-test/reading'
+    | '/app/mock-test/speaking'
+    | '/app/mock-test/writing'
     | '/app/quiz/$quizId'
     | '/app/flashcard'
+    | '/app/mock-test'
     | '/app/quiz'
     | '/app/flashcard/$deckId/study'
     | '/app/flashcard/$deckId'
@@ -181,8 +236,13 @@ export interface FileRouteTypes {
     | '/_auth/signup'
     | '/app/dashboard'
     | '/app/'
+    | '/app/mock-test/listening'
+    | '/app/mock-test/reading'
+    | '/app/mock-test/speaking'
+    | '/app/mock-test/writing'
     | '/app/quiz/$quizId'
     | '/app/flashcard/'
+    | '/app/mock-test/'
     | '/app/quiz/'
     | '/app/flashcard/$deckId/study'
     | '/app/flashcard/$deckId/'
@@ -267,6 +327,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppQuizIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/mock-test/': {
+      id: '/app/mock-test/'
+      path: '/mock-test'
+      fullPath: '/app/mock-test'
+      preLoaderRoute: typeof AppMockTestIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/flashcard/': {
       id: '/app/flashcard/'
       path: '/flashcard'
@@ -279,6 +346,34 @@ declare module '@tanstack/react-router' {
       path: '/quiz/$quizId'
       fullPath: '/app/quiz/$quizId'
       preLoaderRoute: typeof AppQuizQuizIdRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/mock-test/writing': {
+      id: '/app/mock-test/writing'
+      path: '/mock-test/writing'
+      fullPath: '/app/mock-test/writing'
+      preLoaderRoute: typeof AppMockTestWritingRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/mock-test/speaking': {
+      id: '/app/mock-test/speaking'
+      path: '/mock-test/speaking'
+      fullPath: '/app/mock-test/speaking'
+      preLoaderRoute: typeof AppMockTestSpeakingRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/mock-test/reading': {
+      id: '/app/mock-test/reading'
+      path: '/mock-test/reading'
+      fullPath: '/app/mock-test/reading'
+      preLoaderRoute: typeof AppMockTestReadingRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/mock-test/listening': {
+      id: '/app/mock-test/listening'
+      path: '/mock-test/listening'
+      fullPath: '/app/mock-test/listening'
+      preLoaderRoute: typeof AppMockTestListeningRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/app/flashcard/$deckId/': {
@@ -316,8 +411,13 @@ interface AppRouteRouteChildren {
   AppVocabularyRouteRoute: typeof AppVocabularyRouteRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppMockTestListeningRoute: typeof AppMockTestListeningRoute
+  AppMockTestReadingRoute: typeof AppMockTestReadingRoute
+  AppMockTestSpeakingRoute: typeof AppMockTestSpeakingRoute
+  AppMockTestWritingRoute: typeof AppMockTestWritingRoute
   AppQuizQuizIdRoute: typeof AppQuizQuizIdRoute
   AppFlashcardIndexRoute: typeof AppFlashcardIndexRoute
+  AppMockTestIndexRoute: typeof AppMockTestIndexRoute
   AppQuizIndexRoute: typeof AppQuizIndexRoute
   AppFlashcardDeckIdStudyRoute: typeof AppFlashcardDeckIdStudyRoute
   AppFlashcardDeckIdIndexRoute: typeof AppFlashcardDeckIdIndexRoute
@@ -327,8 +427,13 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppVocabularyRouteRoute: AppVocabularyRouteRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppIndexRoute: AppIndexRoute,
+  AppMockTestListeningRoute: AppMockTestListeningRoute,
+  AppMockTestReadingRoute: AppMockTestReadingRoute,
+  AppMockTestSpeakingRoute: AppMockTestSpeakingRoute,
+  AppMockTestWritingRoute: AppMockTestWritingRoute,
   AppQuizQuizIdRoute: AppQuizQuizIdRoute,
   AppFlashcardIndexRoute: AppFlashcardIndexRoute,
+  AppMockTestIndexRoute: AppMockTestIndexRoute,
   AppQuizIndexRoute: AppQuizIndexRoute,
   AppFlashcardDeckIdStudyRoute: AppFlashcardDeckIdStudyRoute,
   AppFlashcardDeckIdIndexRoute: AppFlashcardDeckIdIndexRoute,
