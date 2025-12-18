@@ -1,10 +1,10 @@
 using ELA;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -63,6 +63,7 @@ public static class DependencyInjection
         builder.Services.AddTransient<ICookieService, CookieService>();
         builder.Services.AddTransient<ITokenService, TokenService>();
         builder.Services.AddTransient<ISpacedRepetitionScheduler, Sm2Scheduler>();
+        builder.Services.AddHttpClient<IGeminiService, GeminiService>();
 
         builder.Services.AddTransient<IDataSeeder, VocabularySeeder>();
         builder.Services.AddTransient<IDataSeeder, DeckSeeder>();
