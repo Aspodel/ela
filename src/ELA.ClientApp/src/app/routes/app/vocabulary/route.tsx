@@ -15,9 +15,12 @@ import {
   SectionCards,
   vocabularyApi,
   VocabularyCreateDialog,
+  VocabularyAIGenerator,
   VocabularyList,
   type VocabularyListItemDto,
 } from '@/features/vocabulary';
+import { Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/app/vocabulary')({
   component: RouteComponent,
@@ -26,6 +29,7 @@ export const Route = createFileRoute('/app/vocabulary')({
 function RouteComponent() {
   const [search, setSearch] = React.useState('');
   const [selectedPos, setSelectedPos] = React.useState<string>('all');
+  const [isAIGenOpen, setIsAIGenOpen] = React.useState(false);
   const vocab = vocabularyApi.useList<PaginatedList<VocabularyListItemDto>>({
     pageSize: 100,
   });
@@ -78,9 +82,20 @@ function RouteComponent() {
                 </SelectContent>
               </Select>
             </div>
-            <VocabularyCreateDialog />
+            <div className='flex gap-2'>
+              <Button variant="outline" onClick={() => setIsAIGenOpen(true)} className="gap-2">
+                <Sparkles className="w-4 h-4 text-primary fill-primary/10" />
+                AI Generate
+              </Button>
+              <VocabularyCreateDialog />
+            </div>
           </div>
           <VocabularyList items={filteredVocabulary} />
+          <VocabularyAIGenerator
+            open={isAIGenOpen}
+            onOpenChange={setIsAIGenOpen}
+            onSuccess={() => vocab.refetch()}
+          />
           <Outlet />
         </div>
       </div>

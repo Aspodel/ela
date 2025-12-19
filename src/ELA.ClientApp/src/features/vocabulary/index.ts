@@ -11,6 +11,7 @@ export * from './components/vocabulary-create-dialog';
 export * from './components/vocabulary-details-dialog';
 export * from './components/vocabulary-edit-dialog';
 export * from './components/vocabulary-list';
+export * from './components/vocabulary-ai-generator';
 
 export * from './components/forms/definition-form';
 export * from './components/forms/vocabulary-form';
