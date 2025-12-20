@@ -1,5 +1,5 @@
+import type { CreateVocabularyDto } from "@/features/vocabulary";
 import { apiClient } from "@/lib/api-client";
-import { CreateVocabularyCommand } from "@/features/vocabulary/types";
 
 export interface AIResponse {
     content: string;
@@ -21,8 +21,13 @@ export const aiService = {
         return response.data;
     },
 
-    generateVocabularies: async (topic: string, count: number): Promise<CreateVocabularyCommand[]> => {
-        const response = await apiClient.post<CreateVocabularyCommand[]>("/ai/vocabularies", { topic, count });
+    generateVocabularies: async (topic: string, count: number): Promise<CreateVocabularyDto[]> => {
+        const response = await apiClient.post<CreateVocabularyDto[]>("/ai/vocabularies", { topic, count });
+        return response.data;
+    },
+
+    generateMockTestQuestions: async <T>(type: string, count: number): Promise<T[]> => {
+        const response = await apiClient.post<T[]>("/ai/mock-test", { type, count });
         return response.data;
     }
 };
